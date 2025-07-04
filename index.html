@@ -4,28 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Leit í dómalista</title>
+
+  <!-- Tiny bit of styling just so it looks decent -->
   <style>
-    body{font-family:sans-serif;margin:2rem auto;max-width:28rem;line-height:1.4}
-    input,button{font:inherit;padding:.4rem .6rem}
-    .error{color:#c00;margin-top:.8rem}
+    :root { color-scheme: light dark; }
+    body   { font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 30rem; line-height: 1.4; }
+    form   { display: flex; flex-direction: column; gap: 0.8rem; }
+    input, button { font: inherit; padding: 0.4rem 0.6rem; }
+    input  { width: 12rem; }
+    button { width: fit-content; cursor: pointer; }
+    .error { color: #c00; margin-top: 0.8rem; }
   </style>
 </head>
+
 <body>
   <h1>Finna dóm Hæstaréttar</h1>
 
   <form id="lookupForm">
     <label>
-      Mál Landsréttar nr.:
+      Mál nr. Landsréttar:
       <input id="appealInput"
-         list="appealList"             <!-- connect to datalist -->
-         pattern="[0-9]{1,4}/[0-9]{4}"
-         placeholder="t.d. 37/2022"
-         required autofocus>
+             list="appealList"
+             pattern="[0-9]{1,4}/[0-9]{4}" 
+             placeholder="t.d. 37/2022"
+             required
+             autocomplete="off"
+             autofocus>
     </label>
-    <datalist id="appealList"></datalist>   <!-- empty for now -->
-    <button>Leita</button>
+    <button type="submit">Leita</button>
   </form>
 
+  <!-- the autocomplete options will be filled by app.js -->
+  <datalist id="appealList"></datalist>
+
+  <!-- lookup result or error messages appear here -->
   <div id="result"></div>
 
   <script src="app.js"></script>
