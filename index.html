@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="is">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Leit í dómalista</title>
+  <style>
+    body{font-family:sans-serif;margin:2rem auto;max-width:28rem;line-height:1.4}
+    input,button{font:inherit;padding:.4rem .6rem}
+    .error{color:#c00;margin-top:.8rem}
+  </style>
+</head>
+<body>
+  <h1>Finna dóm Hæstaréttar</h1>
+
+  <form id="lookupForm">
+    <label>
+      Mál nr. Landsréttar:
+      <input id="appealInput" pattern="\\d+/\\d{4}" placeholder="t.d. 123/2024" required autofocus>
+    </label>
+    <button>Leita</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
