@@ -14,11 +14,18 @@
     "supreme": "50/2023",
     "url": "https://www.haestirettur.is/domar/_domur/?id=e8b0b31b-e975-4fa1-a3e9-14400d5e9a07"
   },
-  "181/2021": {
-    "appeal": "181/2021",
-    "supreme": "40/2022",
-    "url": "https://www.haestirettur.is/domar/_domur/?id=454b304c-4479-464b-b520-df822f7a0d7c"
-  },
+  "181/2021": [
+    {
+      "appeal": "181/2021",
+      "supreme": "41/2023",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=2cb6240e-db4d-44a8-956b-39f2d539fbf5"
+    },
+    {
+      "appeal": "181/2021",
+      "supreme": "40/2022",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=454b304c-4479-464b-b520-df822f7a0d7c"
+    }
+  ],
   "418/2022": {
     "appeal": "418/2022",
     "supreme": "4/2024",
@@ -179,11 +186,18 @@
     "supreme": "19/2023",
     "url": "https://www.haestirettur.is/domar/_domur/?id=242a9624-f41d-41cd-becb-974e7cf65958"
   },
-  "510/2021": {
-    "appeal": "510/2021",
-    "supreme": "22/2022",
-    "url": "https://www.haestirettur.is/domar/_domur/?id=016257de-47ce-4df0-889f-b1090226cac6"
-  },
+  "510/2021": [
+    {
+      "appeal": "510/2021",
+      "supreme": "18/2023",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=4aebefe8-f1bb-44f5-b4b0-91f6963e9f2c"
+    },
+    {
+      "appeal": "510/2021",
+      "supreme": "22/2022",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=016257de-47ce-4df0-889f-b1090226cac6"
+    }
+  ],
   "498/2022": {
     "appeal": "498/2022",
     "supreme": "55/2023",
@@ -219,11 +233,18 @@
     "supreme": "16/2023",
     "url": "https://www.haestirettur.is/domar/_domur/?id=f0f719f7-ef97-4df4-9601-b45aa3cbdb08"
   },
-  "259/2021": {
-    "appeal": "259/2021",
-    "supreme": "32/2022",
-    "url": "https://www.haestirettur.is/domar/_domur/?id=7ef37f85-f521-4f3a-bfb0-9ed9292fe575"
-  },
+  "259/2021": [
+    {
+      "appeal": "259/2021",
+      "supreme": "13/2023",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=582c9da1-3274-423d-a73b-7b8159e4de6c"
+    },
+    {
+      "appeal": "259/2021",
+      "supreme": "32/2022",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=7ef37f85-f521-4f3a-bfb0-9ed9292fe575"
+    }
+  ],
   "559/2021": {
     "appeal": "559/2021",
     "supreme": "9/2023",
@@ -574,11 +595,18 @@
     "supreme": "42/2021",
     "url": "https://www.haestirettur.is/domar/_domur/?id=df1b22f6-1693-4fc8-a27b-6717294db5c1"
   },
-  "383/2021": {
-    "appeal": "383/2021",
-    "supreme": "45/2021",
-    "url": "https://www.haestirettur.is/domar/_domur/?id=c5f57891-504d-4e4d-b2ad-b21d8995d7ef"
-  },
+  "383/2021": [
+    {
+      "appeal": "383/2021",
+      "supreme": "9/2022",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=32e8148b-414f-45d8-bbe7-ffc6c121050e"
+    },
+    {
+      "appeal": "383/2021",
+      "supreme": "45/2021",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=c5f57891-504d-4e4d-b2ad-b21d8995d7ef"
+    }
+  ],
   "337/2020": {
     "appeal": "337/2020",
     "supreme": "46/2021",
@@ -714,11 +742,18 @@
     "supreme": "29/2021",
     "url": "https://www.haestirettur.is/domar/_domur/?id=c0ddb7a4-594c-432d-9bda-e04e9385d0c8"
   },
-  "723/2018": {
-    "appeal": "723/2018",
-    "supreme": "34/2020",
-    "url": "https://www.haestirettur.is/domar/_domur/?id=85d46fb5-397f-4cbf-b808-b492262a8572"
-  },
+  "723/2018": [
+    {
+      "appeal": "723/2018",
+      "supreme": "24/2021",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=857bc01d-0054-41b3-92e8-39d2b4270f6e"
+    },
+    {
+      "appeal": "723/2018",
+      "supreme": "34/2020",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=85d46fb5-397f-4cbf-b808-b492262a8572"
+    }
+  ],
   "190/2021": {
     "appeal": "190/2021",
     "supreme": "23/2021",
@@ -1014,11 +1049,18 @@
     "supreme": "30/2019",
     "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=23c0c045-83f3-4eff-a8eb-66dc577b5e1e"
   },
-  "10/2019": {
-    "appeal": "10/2019",
-    "supreme": "47/2019",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=ddd49ded-3713-4c6e-bc04-5a3f13910c49"
-  },
+  "10/2019": [
+    {
+      "appeal": "10/2019",
+      "supreme": "1/2020",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=95446ba3-1cc2-4447-ad29-2aba56a53185"
+    },
+    {
+      "appeal": "10/2019",
+      "supreme": "47/2019",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=ddd49ded-3713-4c6e-bc04-5a3f13910c49"
+    }
+  ],
   "224/2019": {
     "appeal": "224/2019",
     "supreme": "12/2020",
@@ -1254,11 +1296,18 @@
     "supreme": "25/2018",
     "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=e4180c4e-2484-434a-8a2d-8030ed7ca295"
   },
-  "129/2018": {
-    "appeal": "129/2018",
-    "supreme": "7/2018",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=ba641094-64ae-49be-9f38-f1c6fb9eaddb"
-  },
+  "129/2018": [
+    {
+      "appeal": "129/2018",
+      "supreme": "21/2018",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=2a9f3b81-7c37-4022-b786-e4a67db47667"
+    },
+    {
+      "appeal": "129/2018",
+      "supreme": "7/2018",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=ba641094-64ae-49be-9f38-f1c6fb9eaddb"
+    }
+  ],
   "424/2018": {
     "appeal": "424/2018",
     "supreme": "18/2018",
@@ -1329,11 +1378,18 @@
     "supreme": "6/2018",
     "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=f5fd7299-fd01-4065-863d-c27c4caa3376"
   },
-  "6/2018": {
-    "appeal": "6/2018",
-    "supreme": "5/2018",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=58996acc-c357-40a4-8b5b-4494586fa838"
-  },
+  "6/2018": [
+    {
+      "appeal": "6/2018",
+      "supreme": "10/2018",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=a3ebcb0d-4cdd-426a-a2b9-d1ee16b91c55"
+    },
+    {
+      "appeal": "6/2018",
+      "supreme": "5/2018",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=58996acc-c357-40a4-8b5b-4494586fa838"
+    }
+  ],
   "285/2018": {
     "appeal": "285/2018",
     "supreme": "9/2018",

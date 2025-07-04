@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Leit í dómalista</title>
 
-  <!-- Tiny bit of styling just so it looks decent -->
   <style>
     :root { color-scheme: light dark; }
-    body   { font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 30rem; line-height: 1.4; }
+    body   { font-family: system-ui, sans-serif; margin: 2rem auto;
+             max-width: 34rem; line-height: 1.45; }
     form   { display: flex; flex-direction: column; gap: 0.8rem; }
     input, button { font: inherit; padding: 0.4rem 0.6rem; }
     input  { width: 12rem; }
     button { width: fit-content; cursor: pointer; }
+    ul     { margin: 0.6rem 0 1.2rem 1.2rem; }
     .error { color: #c00; margin-top: 0.8rem; }
   </style>
 </head>
@@ -25,7 +26,7 @@
       Mál Landsréttar nr.:
       <input id="appealInput"
              list="appealList"
-             pattern="[0-9]{1,4}/[0-9]{4}" 
+             pattern="[0-9]{1,4}/[0-9]{4}"
              placeholder="t.d. 37/2022"
              required
              autocomplete="off"
@@ -34,10 +35,8 @@
     <button type="submit">Leita</button>
   </form>
 
-  <!-- the autocomplete options will be filled by app.js -->
   <datalist id="appealList"></datalist>
 
-  <!-- lookup result or error messages appear here -->
   <div id="result"></div>
 
   <script src="app.js"></script>
