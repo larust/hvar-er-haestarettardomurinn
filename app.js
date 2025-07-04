@@ -2,7 +2,19 @@
 let mapping = {};
 fetch('mapping.json')
   .then(r => r.json())
-  .then(m => mapping = m)
+  .then(m => {
+    mapping = m;
+
+    // --- fill the datalist for autocomplete ---
+    const dl = document.getElementById('appealList');
+    Object.keys(mapping)
+      .sort((a, b) => a.localeCompare(b, 'is', {numeric:true}))
+      .forEach(key => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        dl.appendChild(opt);
+      });
+  })
   .catch(() => showError('Tókst ekki að hlaða gögnum :('));
 
 const form   = document.getElementById('lookupForm');

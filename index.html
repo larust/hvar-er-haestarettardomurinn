@@ -15,9 +15,14 @@
 
   <form id="lookupForm">
     <label>
-      Mál nr. Landsréttar:
-      <input id="appealInput" pattern="\\d+/\\d{4}" placeholder="t.d. 123/2024" required autofocus>
+      Mál Landsréttar nr.:
+      <input id="appealInput"
+         list="appealList"             <!-- connect to datalist -->
+         pattern="[0-9]{1,4}/[0-9]{4}"
+         placeholder="t.d. 37/2022"
+         required autofocus>
     </label>
+    <datalist id="appealList"></datalist>   <!-- empty for now -->
     <button>Leita</button>
   </form>
 
