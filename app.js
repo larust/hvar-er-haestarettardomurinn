@@ -56,7 +56,7 @@ form.addEventListener('submit', evt => {
         </li>`).join('');
 
   result.innerHTML = `
-      <p>Landsréttarmál <strong>${key}</strong> á eftirfarandi niðurstöður í Hæstarétti:</p>
+      <p>Landsréttarmál <strong>${key}</strong> er dómur Hæstaréttar:</p>
       <ul>${listItems}</ul>`;
 });
 
