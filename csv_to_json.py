@@ -1,8 +1,8 @@
 # convert_csv_to_json.py
 import csv, json, collections, pathlib
-
-csv_path  = pathlib.Path('haestarettardomar.csv')
-json_path = pathlib.Path('mapping.json')
+#csv_path  = pathlib.Path('haestarettardomar.csv')
+csv_path  = pathlib.Path('domar_og_akvardanir.csv')
+json_path = pathlib.Path('mapping_d_og_a.json')
 
 grouped = collections.defaultdict(list)
 with csv_path.open(encoding='utf-8-sig', newline='') as f:

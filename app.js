@@ -18,7 +18,7 @@ const result = document.getElementById('result');
 const dlist  = document.getElementById('appealList');
 
 // ---------- 1. Fetch mapping.json & build datalist --------------------
-fetch('mapping.json')
+fetch('mapping_d_og_a.json')
   .then(r => r.json())
   .then(data => {
     mapping = data;
