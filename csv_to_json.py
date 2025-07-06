@@ -10,7 +10,8 @@ with csv_path.open(encoding='utf-8-sig', newline='') as f:
         grouped[row['appeal'].strip()].append({
             'appeal' : row['appeal'].strip(),
             'supreme': row['supreme'].strip(),
-            'url'    : row['url'].strip()
+            'url'    : row['url'].strip(),
+            'type'    : row['type'].strip()
         })
 
 # if a key has exactly one verdict, store just the object (smaller JSON)

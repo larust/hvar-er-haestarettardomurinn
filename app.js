@@ -22,7 +22,7 @@ form.addEventListener('submit', evt => {
   let rows  = mapping[key];
 
   if (!rows) {
-    showError(`Enginn hæstaréttardómur fannst fyrir <b>${key}</b>.`);
+    showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${key}</b>.`);
     return;
   }
 
@@ -32,12 +32,12 @@ form.addEventListener('submit', evt => {
   // Compose the result HTML
   const listItems = rows.map(item => `
         <li>
-          Mál <strong>${item.supreme}</strong> &nbsp;–&nbsp;
-          <a href="${item.url}" target="_blank" rel="noopener">Skoða dóm</a>
+          Í máli <strong>${item.supreme}</strong> &nbsp;–&nbsp;
+          <a href="${item.url}" target="_blank" rel="noopener">Skoða ${item.type}</a>
         </li>`).join('');
 
   result.innerHTML = `
-      <p>Landsréttarmál <strong>${key}</strong> er dómur Hæstaréttar:</p>
+      <p>Landsréttarmál <strong>${key}</strong> hefur verið til umfjöllunar í Hæstarétti:</p>
       <ul>${listItems}</ul>`;
 });
 
