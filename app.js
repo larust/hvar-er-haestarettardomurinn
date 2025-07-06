@@ -1,13 +1,5 @@
 /*  ------------------------------------------------------------------
     Loads mapping.json, handles look-up, supports 1-to-many results.
-    mapping.json structure accepted:
-
-      "37/2022": {appeal:"37/2022", supreme:"34/2023", url:"…"}
-        – or –
-      "37/2022": [
-          {appeal:"37/2022", supreme:"34/2023", url:"…"},
-          {appeal:"37/2022", supreme:"60/2023", url:"…"}
-        ]
     ------------------------------------------------------------------ */
 
 let mapping = {};                           // filled on load
@@ -15,25 +7,14 @@ let mapping = {};                           // filled on load
 const form   = document.getElementById('lookupForm');
 const input  = document.getElementById('appealInput');
 const result = document.getElementById('result');
-const dlist  = document.getElementById('appealList');
 
-// ---------- 1. Fetch mapping.json & build datalist --------------------
+// ---------- 1. Fetch mapping.json --------------------------------------
 fetch('mapping_d_og_a.json')
   .then(r => r.json())
-  .then(data => {
-    mapping = data;
-
-    Object.keys(mapping)
-      .sort((a, b) => a.localeCompare(b, 'is', { numeric: true }))
-      .forEach(key => {
-        const opt = document.createElement('option');
-        opt.value = key;
-        dlist.appendChild(opt);
-      });
-  })
+  .then(data => { mapping = data; })
   .catch(() => showError('Tókst ekki að hlaða gögnunum :('));
 
-// ---------- 2. Lookup on form submit ----------------------------------
+// ---------- 2. Lookup on form submit -----------------------------------
 form.addEventListener('submit', evt => {
   evt.preventDefault();
 
@@ -60,7 +41,7 @@ form.addEventListener('submit', evt => {
       <ul>${listItems}</ul>`;
 });
 
-// ---------- 3. Helper --------------------------------------------------
+// ---------- 3. Helper ---------------------------------------------------
 function showError(msg) {
   result.innerHTML = `<p class="error">${msg}</p>`;
 }
