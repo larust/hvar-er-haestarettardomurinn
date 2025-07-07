@@ -1371,12 +1371,20 @@
     "url": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=39eefec9-695e-4f03-ba8e-7954ea7cfdac",
     "type": "ákvörðun"
   },
-  "76/2025": {
-    "appeal": "76/2025",
-    "supreme": "104/2025",
-    "url": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=75fb3073-ab0e-4be8-9d76-cc43b24aab7c",
-    "type": "ákvörðun"
-  },
+  "76/2025": [
+    {
+      "appeal": "76/2025",
+      "supreme": "104/2025",
+      "url": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=75fb3073-ab0e-4be8-9d76-cc43b24aab7c",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "76/2025",
+      "supreme": "38/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=b7ed1083-79d7-4684-b069-3bf420050483",
+      "type": "dóm"
+    }
+  ],
   "112/2024": {
     "appeal": "112/2024",
     "supreme": "82/2025",
@@ -1485,12 +1493,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=c1183983-5919-48ef-8979-caa9ecb5ae82",
     "type": "ákvörðun"
   },
-  "67/2025": {
-    "appeal": "67/2025",
-    "supreme": "43/2025",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f9dbde88-5d55-41f3-b7dc-7dbd7fb0753c",
-    "type": "ákvörðun"
-  },
+  "67/2025": [
+    {
+      "appeal": "67/2025",
+      "supreme": "43/2025",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f9dbde88-5d55-41f3-b7dc-7dbd7fb0753c",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "67/2025",
+      "supreme": "26/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=8cc3b6a9-21e6-4c49-be0c-efa4e06ef1d2",
+      "type": "dóm"
+    }
+  ],
   "429/2023": {
     "appeal": "429/2023",
     "supreme": "40/2025",
@@ -1595,12 +1611,20 @@
       "type": "ákvörðun"
     }
   ],
-  "988/2024": {
-    "appeal": "988/2024",
-    "supreme": "25/2025",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=34ad2b12-029c-4a77-aa0d-b26e2aceb8f6",
-    "type": "ákvörðun"
-  },
+  "988/2024": [
+    {
+      "appeal": "988/2024",
+      "supreme": "25/2025",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=34ad2b12-029c-4a77-aa0d-b26e2aceb8f6",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "988/2024",
+      "supreme": "22/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=c37de763-7fd5-40c9-8353-202dd4d487f2",
+      "type": "dóm"
+    }
+  ],
   "785/2023": [
     {
       "appeal": "785/2023",
@@ -1675,6 +1699,12 @@
       "supreme": "123/2024",
       "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=29816d74-e0d0-489d-b599-1e9d721ba587",
       "type": "ákvörðun"
+    },
+    {
+      "appeal": "334/2024",
+      "supreme": "51/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=ba864db9-e826-4781-aa37-9b45dba99601",
+      "type": "dóm"
     }
   ],
   "59/2025": {
@@ -1755,12 +1785,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ce443e6a-4914-4d5f-9bde-cd9f06eb6776",
     "type": "ákvörðun"
   },
-  "487/2023": {
-    "appeal": "487/2023",
-    "supreme": "149/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f2e7fe2c-6d9c-4cc9-bfb1-26170480d1c1",
-    "type": "ákvörðun"
-  },
+  "487/2023": [
+    {
+      "appeal": "487/2023",
+      "supreme": "149/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f2e7fe2c-6d9c-4cc9-bfb1-26170480d1c1",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "487/2023",
+      "supreme": "5/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=01f7b474-784c-49e2-849b-ca3af6e71d75",
+      "type": "dóm"
+    }
+  ],
   "527/2023": {
     "appeal": "527/2023",
     "supreme": "147/2024",
@@ -1779,12 +1817,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=9c986ad8-295a-4c62-944e-8e965c81e78f",
     "type": "ákvörðun"
   },
-  "486/2023": {
-    "appeal": "486/2023",
-    "supreme": "155/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=b35d7bda-5404-4692-a836-c28de4ce482b",
-    "type": "ákvörðun"
-  },
+  "486/2023": [
+    {
+      "appeal": "486/2023",
+      "supreme": "155/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=b35d7bda-5404-4692-a836-c28de4ce482b",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "486/2023",
+      "supreme": "4/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=8e90e504-150e-4bd3-bd7b-4e561a79ed7c",
+      "type": "dóm"
+    }
+  ],
   "358/2023": {
     "appeal": "358/2023",
     "supreme": "144/2024",
@@ -1815,18 +1861,34 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=cef8a9c6-f1ef-44f9-a16c-a69ebeb5b73d",
     "type": "ákvörðun"
   },
-  "899/2023": {
-    "appeal": "899/2023",
-    "supreme": "4/2025",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=bc7e04f2-4aa1-407f-9444-bee52110dc12",
-    "type": "ákvörðun"
-  },
-  "802/2024": {
-    "appeal": "802/2024",
-    "supreme": "179/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=bb33bc5a-e975-4cb1-bc0b-dcdd985075ce",
-    "type": "ákvörðun"
-  },
+  "899/2023": [
+    {
+      "appeal": "899/2023",
+      "supreme": "4/2025",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=bc7e04f2-4aa1-407f-9444-bee52110dc12",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "899/2023",
+      "supreme": "2/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=b4db38cc-29f9-49e2-91a5-81897ffadb72",
+      "type": "dóm"
+    }
+  ],
+  "802/2024": [
+    {
+      "appeal": "802/2024",
+      "supreme": "179/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=bb33bc5a-e975-4cb1-bc0b-dcdd985075ce",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "802/2024",
+      "supreme": "1/2025",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=2ee639d4-e21b-4d95-aaeb-fdfce94c19d5",
+      "type": "dóm"
+    }
+  ],
   "879/2024": {
     "appeal": "879/2024",
     "supreme": "166/2024",
@@ -1845,12 +1907,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=d51f8711-2185-4ae3-8b69-3e71f5a59359",
     "type": "ákvörðun"
   },
-  "107/2024": {
-    "appeal": "107/2024",
-    "supreme": "150/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=318eeaff-f793-409a-bc7d-8e4af8662451",
-    "type": "ákvörðun"
-  },
+  "107/2024": [
+    {
+      "appeal": "107/2024",
+      "supreme": "150/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=318eeaff-f793-409a-bc7d-8e4af8662451",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "107/2024",
+      "supreme": "3/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=c85ec96f-5f85-4e38-9598-2648a2bab063",
+      "type": "dóm"
+    }
+  ],
   "190/2024": {
     "appeal": "190/2024",
     "supreme": "36/2025",
@@ -1925,12 +1995,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f054d2fc-dbcb-429c-a017-f18fb26ab204",
     "type": "ákvörðun"
   },
-  "584/2023": {
-    "appeal": "584/2023",
-    "supreme": "163/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=82b08c43-aa00-4783-8ff3-1ce4aef9a373",
-    "type": "ákvörðun"
-  },
+  "584/2023": [
+    {
+      "appeal": "584/2023",
+      "supreme": "163/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=82b08c43-aa00-4783-8ff3-1ce4aef9a373",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "584/2023",
+      "supreme": "7/2025",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=4a43e983-8699-4c5a-83ef-2dc092becc6e",
+      "type": "dóm"
+    }
+  ],
   "738/2023": {
     "appeal": "738/2023",
     "supreme": "178/2024",
@@ -2101,12 +2179,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4d6db5a0-3cda-414b-9419-294f16c31493",
     "type": "ákvörðun"
   },
-  "237/2023": {
-    "appeal": "237/2023",
-    "supreme": "129/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=29837251-c4ed-4033-a7cf-3b62f11540de",
-    "type": "ákvörðun"
-  },
+  "237/2023": [
+    {
+      "appeal": "237/2023",
+      "supreme": "129/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=29837251-c4ed-4033-a7cf-3b62f11540de",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "237/2023",
+      "supreme": "52/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=b07f7a74-de19-4f4c-b8e5-652631c9f5e9",
+      "type": "dóm"
+    }
+  ],
   "267/2024": {
     "appeal": "267/2024",
     "supreme": "137/2024",
@@ -2131,12 +2217,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=68fa3923-7b7e-48d1-8ec4-a6b633cd333e",
     "type": "ákvörðun"
   },
-  "595/2024": {
-    "appeal": "595/2024",
-    "supreme": "121/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=8e5ae7f0-f386-43de-8cdf-a859faf375bf",
-    "type": "ákvörðun"
-  },
+  "595/2024": [
+    {
+      "appeal": "595/2024",
+      "supreme": "121/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=8e5ae7f0-f386-43de-8cdf-a859faf375bf",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "595/2024",
+      "supreme": "50/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=55fee087-715a-4ec0-a937-c49ad0655fe5",
+      "type": "dóm"
+    }
+  ],
   "368/2023": {
     "appeal": "368/2023",
     "supreme": "131/2024",
@@ -2167,12 +2261,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ca1386bc-9b99-4d42-ac6c-8aa9c24b2942",
     "type": "ákvörðun"
   },
-  "331/2023": {
-    "appeal": "331/2023",
-    "supreme": "134/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=3ec1a114-1bcd-48f3-9e6c-02433d66c4c4",
-    "type": "ákvörðun"
-  },
+  "331/2023": [
+    {
+      "appeal": "331/2023",
+      "supreme": "134/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=3ec1a114-1bcd-48f3-9e6c-02433d66c4c4",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "331/2023",
+      "supreme": "53/2024",
+      "url": "https://www.haestirettur.is/domar/_domur/?id=6285a17b-7248-4bcf-946d-1be417d59c2d",
+      "type": "dóm"
+    }
+  ],
   "655/2024": {
     "appeal": "655/2024",
     "supreme": "126/2024",
@@ -2185,12 +2287,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=b77ce7f4-87d2-4c79-b975-1d7a56e566df",
     "type": "ákvörðun"
   },
-  "528/2024": {
-    "appeal": "528/2024",
-    "supreme": "128/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f6c76afe-f309-4350-94c7-c5b2a08560ea",
-    "type": "ákvörðun"
-  },
+  "528/2024": [
+    {
+      "appeal": "528/2024",
+      "supreme": "128/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f6c76afe-f309-4350-94c7-c5b2a08560ea",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "528/2024",
+      "supreme": "49/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=67567bbc-d4f6-46fc-85e5-c024d697443b",
+      "type": "dóm"
+    }
+  ],
   "491/2024": {
     "appeal": "491/2024",
     "supreme": "122/2024",
@@ -2203,24 +2313,40 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=e1b7130b-2a0f-46e0-be75-c3cb2abc50a4",
     "type": "ákvörðun"
   },
-  "577/2023": {
-    "appeal": "577/2023",
-    "supreme": "118/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f95a7711-0160-417f-bf82-0f725a8efe3f",
-    "type": "ákvörðun"
-  },
+  "577/2023": [
+    {
+      "appeal": "577/2023",
+      "supreme": "118/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f95a7711-0160-417f-bf82-0f725a8efe3f",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "577/2023",
+      "supreme": "47/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=08789148-d0ac-476f-a3a4-c5ce169bb81a",
+      "type": "dóm"
+    }
+  ],
   "433/2022": {
     "appeal": "433/2022",
     "supreme": "99/2024",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=c9237660-245d-453f-bba5-4a743bde0a3b",
     "type": "ákvörðun"
   },
-  "160/2023": {
-    "appeal": "160/2023",
-    "supreme": "109/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=a64e1dfd-26c8-44b4-98b7-4d4397935223",
-    "type": "ákvörðun"
-  },
+  "160/2023": [
+    {
+      "appeal": "160/2023",
+      "supreme": "109/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=a64e1dfd-26c8-44b4-98b7-4d4397935223",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "160/2023",
+      "supreme": "46/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=b0bf3d5d-aef4-49b8-84ff-71ba6b5df66b",
+      "type": "dóm"
+    }
+  ],
   "386/2023": {
     "appeal": "386/2023",
     "supreme": "116/2024",
@@ -2401,12 +2527,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=eb858cea-46e7-4b77-a52b-d48c852be0fc",
     "type": "ákvörðun"
   },
-  "279/2024": {
-    "appeal": "279/2024",
-    "supreme": "104/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ea3d1f1d-be9e-4740-bad1-6e6cbaae6b74",
-    "type": "ákvörðun"
-  },
+  "279/2024": [
+    {
+      "appeal": "279/2024",
+      "supreme": "104/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ea3d1f1d-be9e-4740-bad1-6e6cbaae6b74",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "279/2024",
+      "supreme": "42/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=e62ff445-736a-4e78-a33d-d6e56efab894",
+      "type": "dóm"
+    }
+  ],
   "240/2023": {
     "appeal": "240/2023",
     "supreme": "81/2024",
@@ -2431,24 +2565,40 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=9372e5fa-a0e7-4274-9470-6093d796dcad",
     "type": "ákvörðun"
   },
-  "454/2024": {
-    "appeal": "454/2024",
-    "supreme": "106/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=760e4ca2-694d-4398-a2e5-5f7833ebcc39",
-    "type": "ákvörðun"
-  },
+  "454/2024": [
+    {
+      "appeal": "454/2024",
+      "supreme": "106/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=760e4ca2-694d-4398-a2e5-5f7833ebcc39",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "454/2024",
+      "supreme": "40/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=be9e9301-6b4f-45db-9155-b28c3b43337a",
+      "type": "dóm"
+    }
+  ],
   "57/2023": {
     "appeal": "57/2023",
     "supreme": "86/2024",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=0fa3d03e-835e-41b2-a3d8-97027866b157",
     "type": "ákvörðun"
   },
-  "210/2024": {
-    "appeal": "210/2024",
-    "supreme": "82/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=341e2eaa-60de-4a75-bd61-62ebd9865f4c",
-    "type": "ákvörðun"
-  },
+  "210/2024": [
+    {
+      "appeal": "210/2024",
+      "supreme": "82/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=341e2eaa-60de-4a75-bd61-62ebd9865f4c",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "210/2024",
+      "supreme": "39/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=4b9cd292-e48c-411c-94e2-2b1f26c78f8f",
+      "type": "dóm"
+    }
+  ],
   "247/2023": {
     "appeal": "247/2023",
     "supreme": "87/2024",
@@ -2473,14 +2623,28 @@
       "supreme": "75/2024",
       "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4a0be765-4f6c-4678-ac83-31adba3fa03e",
       "type": "ákvörðun"
+    },
+    {
+      "appeal": "52/2023",
+      "supreme": "34/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=7fcbbd69-c5f9-49f8-bbff-3150f07cd2fb",
+      "type": "dóm"
     }
   ],
-  "518/2023": {
-    "appeal": "518/2023",
-    "supreme": "88/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=6cffad30-d07f-4dd4-8212-7b2305dbf346",
-    "type": "ákvörðun"
-  },
+  "518/2023": [
+    {
+      "appeal": "518/2023",
+      "supreme": "88/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=6cffad30-d07f-4dd4-8212-7b2305dbf346",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "518/2023",
+      "supreme": "33/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=321ef718-c9b0-4459-b4cc-0ea0a3a309de",
+      "type": "dóm"
+    }
+  ],
   "636/2022": [
     {
       "appeal": "636/2022",
@@ -2537,12 +2701,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4e15e560-4f97-47dd-9dd1-9fb605f2654f",
     "type": "ákvörðun"
   },
-  "305/2022": {
-    "appeal": "305/2022",
-    "supreme": "73/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=40a6cfa2-2f97-4a04-bdd0-c9c966768574",
-    "type": "ákvörðun"
-  },
+  "305/2022": [
+    {
+      "appeal": "305/2022",
+      "supreme": "73/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=40a6cfa2-2f97-4a04-bdd0-c9c966768574",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "305/2022",
+      "supreme": "36/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=a1e74023-546a-474d-aaef-69007d148d2d",
+      "type": "dóm"
+    }
+  ],
   "335/2023": {
     "appeal": "335/2023",
     "supreme": "70/2024",
@@ -2555,12 +2727,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=aaae7731-c0bf-4b1a-8e0e-a0adc68edab8",
     "type": "ákvörðun"
   },
-  "767/2022": {
-    "appeal": "767/2022",
-    "supreme": "43/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=958f3fa6-809b-4c54-ab84-b649fb500d14",
-    "type": "ákvörðun"
-  },
+  "767/2022": [
+    {
+      "appeal": "767/2022",
+      "supreme": "43/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=958f3fa6-809b-4c54-ab84-b649fb500d14",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "767/2022",
+      "supreme": "32/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=45b6006d-ce55-4867-811f-758e6c35ab70",
+      "type": "dóm"
+    }
+  ],
   "186/2023": {
     "appeal": "186/2023",
     "supreme": "55/2024",
@@ -2627,36 +2807,60 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=0fd11f15-3f0d-487a-8dca-c22dff37b325",
     "type": "ákvörðun"
   },
-  "24/2023": {
-    "appeal": "24/2023",
-    "supreme": "40/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=d3479b95-a837-460a-b0cc-fb22725cbf6b",
-    "type": "ákvörðun"
-  },
+  "24/2023": [
+    {
+      "appeal": "24/2023",
+      "supreme": "40/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=d3479b95-a837-460a-b0cc-fb22725cbf6b",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "24/2023",
+      "supreme": "30/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=04bd288f-9bcb-4a4b-b0f5-ec371057197d",
+      "type": "dóm"
+    }
+  ],
   "141/2024": {
     "appeal": "141/2024",
     "supreme": "62/2024",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=e8506763-c7e7-4867-b3d7-223a11b0e5a7",
     "type": "ákvörðun"
   },
-  "244/2023": {
-    "appeal": "244/2023",
-    "supreme": "41/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=6b27605c-7344-4a1b-9d90-7579bcfa4d50",
-    "type": "ákvörðun"
-  },
+  "244/2023": [
+    {
+      "appeal": "244/2023",
+      "supreme": "41/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=6b27605c-7344-4a1b-9d90-7579bcfa4d50",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "244/2023",
+      "supreme": "28/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=8f9f0400-3d07-4abb-bd0b-3c5b85762a33",
+      "type": "dóm"
+    }
+  ],
   "752/2022": {
     "appeal": "752/2022",
     "supreme": "38/2024",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=93ff40a1-2d05-4431-b46c-77318929a231",
     "type": "ákvörðun"
   },
-  "496/2023": {
-    "appeal": "496/2023",
-    "supreme": "58/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=83839fbe-1241-4a4d-8c54-b1cfd31fe987",
-    "type": "ákvörðun"
-  },
+  "496/2023": [
+    {
+      "appeal": "496/2023",
+      "supreme": "58/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=83839fbe-1241-4a4d-8c54-b1cfd31fe987",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "496/2023",
+      "supreme": "29/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=151ca34d-3590-46cd-a396-b3b931ecf725",
+      "type": "dóm"
+    }
+  ],
   "146/2023": {
     "appeal": "146/2023",
     "supreme": "64/2024",
@@ -2675,24 +2879,48 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=c80acc90-d2e6-47dc-b44b-1d9ae284f000",
     "type": "ákvörðun"
   },
-  "179/2023": {
-    "appeal": "179/2023",
-    "supreme": "42/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=7b5de536-b095-4e63-95b9-62446ec40ba4",
-    "type": "ákvörðun"
-  },
-  "205/2023": {
-    "appeal": "205/2023",
-    "supreme": "65/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=cb3a1f7a-fbc8-4505-88ca-bd542adc3a7d",
-    "type": "ákvörðun"
-  },
-  "674/2022": {
-    "appeal": "674/2022",
-    "supreme": "34/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ea1b7287-8d7a-4b2b-99c2-c14275207d93",
-    "type": "ákvörðun"
-  },
+  "179/2023": [
+    {
+      "appeal": "179/2023",
+      "supreme": "42/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=7b5de536-b095-4e63-95b9-62446ec40ba4",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "179/2023",
+      "supreme": "27/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=fcf65429-5705-4161-8516-d1175c1c6018",
+      "type": "dóm"
+    }
+  ],
+  "205/2023": [
+    {
+      "appeal": "205/2023",
+      "supreme": "65/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=cb3a1f7a-fbc8-4505-88ca-bd542adc3a7d",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "205/2023",
+      "supreme": "26/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=8fe1ed26-4ce4-49b0-9822-e8cef4ae408e",
+      "type": "dóm"
+    }
+  ],
+  "674/2022": [
+    {
+      "appeal": "674/2022",
+      "supreme": "34/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ea1b7287-8d7a-4b2b-99c2-c14275207d93",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "674/2022",
+      "supreme": "25/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=2b2dbe85-55c2-41c5-8814-130df1b6e6f7",
+      "type": "dóm"
+    }
+  ],
   "576/2023": {
     "appeal": "576/2023",
     "supreme": "63/2024",
@@ -2705,24 +2933,40 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=07c86b6f-3161-4682-991f-e0ccc285098d",
     "type": "ákvörðun"
   },
-  "801/2022": {
-    "appeal": "801/2022",
-    "supreme": "37/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=49f940bb-b672-42ec-9b9e-751bb66ef48e",
-    "type": "ákvörðun"
-  },
+  "801/2022": [
+    {
+      "appeal": "801/2022",
+      "supreme": "37/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=49f940bb-b672-42ec-9b9e-751bb66ef48e",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "801/2022",
+      "supreme": "22/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=e9989aa9-1bb2-4922-920a-2edf6b7ba4ec",
+      "type": "dóm"
+    }
+  ],
   "885/2023": {
     "appeal": "885/2023",
     "supreme": "30/2024",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=9aabe290-7d15-41a8-8850-8503e119b77a",
     "type": "ákvörðun"
   },
-  "807/2022": {
-    "appeal": "807/2022",
-    "supreme": "33/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4258f950-2290-4c18-80bb-d4f13caf1ddf",
-    "type": "ákvörðun"
-  },
+  "807/2022": [
+    {
+      "appeal": "807/2022",
+      "supreme": "33/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4258f950-2290-4c18-80bb-d4f13caf1ddf",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "807/2022",
+      "supreme": "21/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=931bf25e-2aa2-417b-badf-9e8714f05f48",
+      "type": "dóm"
+    }
+  ],
   "66/2024": [
     {
       "appeal": "66/2024",
@@ -2757,12 +3001,20 @@
       "type": "dóm"
     }
   ],
-  "460/2022": {
-    "appeal": "460/2022",
-    "supreme": "24/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=9b68cf3b-335d-48b5-b590-deb3295f6ea8",
-    "type": "ákvörðun"
-  },
+  "460/2022": [
+    {
+      "appeal": "460/2022",
+      "supreme": "24/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=9b68cf3b-335d-48b5-b590-deb3295f6ea8",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "460/2022",
+      "supreme": "19/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=d9b79002-02a9-4ded-9242-c77decb148b5",
+      "type": "dóm"
+    }
+  ],
   "126/2024": {
     "appeal": "126/2024",
     "supreme": "57/2024",
@@ -2879,12 +3131,20 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=d7af04e3-f447-4483-ad6b-9c218ead3ad8",
     "type": "ákvörðun"
   },
-  "570/2022": {
-    "appeal": "570/2022",
-    "supreme": "3/2024",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=a06ba549-ba2b-4204-bcf3-544a1e652ade",
-    "type": "ákvörðun"
-  },
+  "570/2022": [
+    {
+      "appeal": "570/2022",
+      "supreme": "3/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=a06ba549-ba2b-4204-bcf3-544a1e652ade",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "570/2022",
+      "supreme": "12/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=5947baec-f5e9-422d-9371-f5d51280572c",
+      "type": "dóm"
+    }
+  ],
   "332/2022": {
     "appeal": "332/2022",
     "supreme": "5/2024",
@@ -2903,24 +3163,40 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=e4b6da9f-8cb5-46d9-80d8-197081c7a26c",
     "type": "ákvörðun"
   },
-  "782/2021": {
-    "appeal": "782/2021",
-    "supreme": "160/2023",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=348cebe6-8a51-45e7-8ba7-997b6c62b05d",
-    "type": "ákvörðun"
-  },
+  "782/2021": [
+    {
+      "appeal": "782/2021",
+      "supreme": "160/2023",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=348cebe6-8a51-45e7-8ba7-997b6c62b05d",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "782/2021",
+      "supreme": "9/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=fd18ac45-e74a-4227-80f7-ce3676dc55e3",
+      "type": "dóm"
+    }
+  ],
   "471/2022": {
     "appeal": "471/2022",
     "supreme": "159/2023",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=dfaee40e-9c59-486b-85c2-0e283d54fec2",
     "type": "ákvörðun"
   },
-  "442/2022": {
-    "appeal": "442/2022",
-    "supreme": "155/2023",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=27e12e17-a2ec-434f-aa67-b5005c7027a1",
-    "type": "ákvörðun"
-  },
+  "442/2022": [
+    {
+      "appeal": "442/2022",
+      "supreme": "155/2023",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=27e12e17-a2ec-434f-aa67-b5005c7027a1",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "442/2022",
+      "supreme": "8/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=4b707874-a0a5-4e82-9eb0-ebda0884e60d",
+      "type": "dóm"
+    }
+  ],
   "350/2022": {
     "appeal": "350/2022",
     "supreme": "156/2023",
@@ -2945,18 +3221,34 @@
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=9b432213-3c22-441e-8d66-630ad0f15f1f",
     "type": "ákvörðun"
   },
-  "571/2022": {
-    "appeal": "571/2022",
-    "supreme": "152/2023",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f6206321-f489-431a-98e8-815343f8e7b9",
-    "type": "ákvörðun"
-  },
-  "501/2022": {
-    "appeal": "501/2022",
-    "supreme": "148/2023",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=d0c57bbc-e964-4d43-b7c5-98444cbf8783",
-    "type": "ákvörðun"
-  },
+  "571/2022": [
+    {
+      "appeal": "571/2022",
+      "supreme": "152/2023",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=f6206321-f489-431a-98e8-815343f8e7b9",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "571/2022",
+      "supreme": "7/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=7b7fa7db-65c8-4284-919d-80a595613618",
+      "type": "dóm"
+    }
+  ],
+  "501/2022": [
+    {
+      "appeal": "501/2022",
+      "supreme": "148/2023",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=d0c57bbc-e964-4d43-b7c5-98444cbf8783",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "501/2022",
+      "supreme": "6/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=15f833b1-d4ee-499e-9106-d654eff92f7a",
+      "type": "dóm"
+    }
+  ],
   "734/2023": {
     "appeal": "734/2023",
     "supreme": "157/2023",
@@ -3049,12 +3341,20 @@
       "type": "dóm"
     }
   ],
-  "748/2020": {
-    "appeal": "748/2020",
-    "supreme": "135/2023",
-    "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=5e6d5669-bd9e-400f-a849-88878b72ea18",
-    "type": "ákvörðun"
-  },
+  "748/2020": [
+    {
+      "appeal": "748/2020",
+      "supreme": "135/2023",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=5e6d5669-bd9e-400f-a849-88878b72ea18",
+      "type": "ákvörðun"
+    },
+    {
+      "appeal": "748/2020",
+      "supreme": "3/2024",
+      "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=aa66b28b-932d-4fb6-aeb0-1c57accb7513",
+      "type": "dóm"
+    }
+  ],
   "333/2022": {
     "appeal": "333/2022",
     "supreme": "127/2023",
@@ -8052,6 +8352,42 @@
     "supreme": "86/2018",
     "url": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ec5a33c0-f32e-4b2d-a720-b6f74b847d70",
     "type": "ákvörðun"
+  },
+  "169/2024": {
+    "appeal": "169/2024",
+    "supreme": "17/2025",
+    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=95b45719-a5bb-49b7-838f-282df405d51f",
+    "type": "dóm"
+  },
+  "50/2024": {
+    "appeal": "50/2024",
+    "supreme": "13/2025",
+    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=0cf0e485-ab27-4913-a1b8-5b3000447f26",
+    "type": "dóm"
+  },
+  "329/2023": {
+    "appeal": "329/2023",
+    "supreme": "41/2024",
+    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=7dd7385d-d1bf-4885-ae85-155bbb35d96f",
+    "type": "dóm"
+  },
+  "286/2023": {
+    "appeal": "286/2023",
+    "supreme": "45/2024",
+    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=1b575a7b-1c73-4826-95b8-146a1153df2c",
+    "type": "dóm"
+  },
+  "99/2024": {
+    "appeal": "99/2024",
+    "supreme": "44/2024",
+    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=3fdfa125-bbcf-47a1-ac51-7694d9a074d2",
+    "type": "dóm"
+  },
+  "456/2024": {
+    "appeal": "456/2024",
+    "supreme": "37/2024",
+    "url": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=2e5ad59c-7a50-4756-a53d-84141e095b7a",
+    "type": "dóm"
   },
   "378/2024": {
     "appeal": "378/2024",
