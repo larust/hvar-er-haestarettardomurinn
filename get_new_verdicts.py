@@ -90,8 +90,8 @@ def get_decision_links() -> list[str]:
 
 
 def main():
-    csv_file = Path("data/allir_domar_og_akvardanir.csv")
-    json_file = Path("data/mapping.json")
+    csv_file = Path("allir_domar_og_akvardanir.csv")
+    json_file = Path("mapping.json")
     cols = [
         "supreme_case_number",
         "supreme_case_link",
