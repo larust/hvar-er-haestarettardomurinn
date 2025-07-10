@@ -1,0 +1,3 @@
+requests==2.32.4         # HTTP library                             :contentReference[oaicite:0]{index=0}
+pandas==2.3.1            # Data analysis library                     :contentReference[oaicite:1]{index=1}
+beautifulsoup4==4.13.4   # HTML/XML parsing library (bs4 namespace)   :contentReference[oaicite:2]{index=2}

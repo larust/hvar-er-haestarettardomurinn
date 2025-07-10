@@ -9,7 +9,7 @@ const input  = document.getElementById('appealInput');
 const result = document.getElementById('result');
 
 // ---------- 1. Fetch mapping.json --------------------------------------
-fetch('mapping_d_og_a.json')
+fetch('mapping.json')
   .then(r => r.json())
   .then(data => { mapping = data; })
   .catch(() => showError('Tókst ekki að hlaða gögnunum :('));
