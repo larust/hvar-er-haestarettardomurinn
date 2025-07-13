@@ -11,8 +11,12 @@ from zoneinfo import ZoneInfo
 
 HEADERS = {"User-Agent": ( "Mozilla/5.0 (X11; Linux x86_64) ")}
 
-# New Supreme Court case-number pattern, e.g. "2025-106"
-SUPREME_RE = re.compile(r"\b(\d{4}-\d+)\b")
+# Supreme Court case-number patterns
+#
+#  * Decisions ("ákvarðanir") use the newer hyphenated format, e.g. "2025-106".
+#  * Verdicts ("dómar") still use the traditional slash format, e.g. "23/2024".
+SUPREME_DECISION_RE = re.compile(r"\b(\d{4}-\d+)\b")
+SUPREME_VERDICT_RE = re.compile(r"\b(\d+)/(20\d{2})\b")
 
 # Appeals-court link & number patterns (unchanged)
 APPEALS_URL_RE = re.compile(
@@ -43,8 +47,19 @@ def scrape_supreme(url: str) -> tuple[str, str, str, str]:
 
     # Supreme-Court case number
     sup_no = ""
-    for match in SUPREME_RE.findall(html):
-        sup_no = match
+    # Choose regex based on link type
+    if "/domar/" in url:
+        # verdicts have numbers like "23/2024"
+        regex = SUPREME_VERDICT_RE
+    else:
+        # decisions use the newer format "2025-106"
+        regex = SUPREME_DECISION_RE
+
+    for match in regex.findall(html):
+        if isinstance(match, tuple):
+            sup_no = f"{match[0]}/{match[1]}"
+        else:
+            sup_no = match
         break
 
     # Find appeals link if any
