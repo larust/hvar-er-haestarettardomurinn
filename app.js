@@ -29,6 +29,27 @@ form.addEventListener('submit', evt => {
   // Normalise: ensure rows is an array
   if (!Array.isArray(rows)) rows = [rows];
 
+  // Find the first non-empty appeals link
+  const firstAppealItem = rows.find(item =>
+    item.appeals_case_link &&
+    item.appeals_case_link.trim() !== ''
+  );
+  const firstAppealUrl = firstAppealItem
+    ? firstAppealItem.appeals_case_link
+    : '';
+
+  // Build the in-block label: link if we have one, else just bold text
+  const keyHtml = firstAppealUrl
+    ? `<a href="${firstAppealUrl}" target="_blank" rel="noopener"><strong>${key}</strong></a>`
+    : `<strong>${key}</strong>`;
+
+  // Always include this paragraph
+  const firstAppealHtml = `
+    <p>
+      Landsréttarmál ${keyHtml} hefur verið til umfjöllunar í Hæstarétti:
+    </p>
+  `;
+
   // Compose the result HTML
   const listItems = rows.map(item => `
         <li>
@@ -37,7 +58,7 @@ form.addEventListener('submit', evt => {
         </li>`).join('');
 
   result.innerHTML = `
-      <p>Landsréttarmál <strong>${key}</strong> hefur verið til umfjöllunar í Hæstarétti:</p>
+      ${firstAppealHtml}
       <ul>${listItems}</ul>`;
 });
 
