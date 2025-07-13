@@ -6,6 +6,8 @@ import pandas as pd
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 HEADERS = {"User-Agent": ( "Mozilla/5.0 (X11; Linux x86_64) ")}
 
@@ -172,6 +174,27 @@ def main():
         for v in mapping.values()
     )
     print(f"Wrote {json_file} with {total:,} verdict links")
+
+    # 5) Write timestamp in Icelandic locale format
+    months = [
+        "",
+        "janúar",
+        "febrúar",
+        "mars",
+        "apríl",
+        "maí",
+        "júní",
+        "júlí",
+        "ágúst",
+        "september",
+        "október",
+        "nóvember",
+        "desember",
+    ]
+    dt = datetime.now(ZoneInfo("Atlantic/Reykjavik"))
+    ts_str = f"Síðast uppfært {dt.day}. {months[dt.month]} {dt.year}."
+    Path("last_updated.txt").write_text(ts_str, encoding="utf-8")
+    print(f"Wrote last_updated.txt: {ts_str}")
 
 if __name__ == "__main__":
     main()
