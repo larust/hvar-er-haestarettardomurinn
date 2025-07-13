@@ -8,6 +8,17 @@ const form   = document.getElementById('lookupForm');
 const input  = document.getElementById('appealInput');
 const result = document.getElementById('result');
 
+// Escape basic HTML entities to avoid injection when inserting user data
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[ch]));
+}
+
 // ---------- 1. Fetch mapping.json --------------------------------------
 fetch('mapping.json')
   .then(r => r.json())
@@ -19,10 +30,11 @@ form.addEventListener('submit', evt => {
   evt.preventDefault();
 
   const key = input.value.trim();
+  const safeKey = escapeHtml(key);
   let rows  = mapping[key];
 
   if (!rows) {
-    showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${key}</b>.`);
+    showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${safeKey}</b>.`);
     return;
   }
 
@@ -40,8 +52,8 @@ form.addEventListener('submit', evt => {
 
   // Build the in-block label: link if we have one, else just bold text
   const keyHtml = firstAppealUrl
-    ? `<a href="${firstAppealUrl}" target="_blank" rel="noopener"><strong>${key}</strong></a>`
-    : `<strong>${key}</strong>`;
+    ? `<a href="${firstAppealUrl}" target="_blank" rel="noopener"><strong>${safeKey}</strong></a>`
+    : `<strong>${safeKey}</strong>`;
 
   // Always include this paragraph
   const firstAppealHtml = `
