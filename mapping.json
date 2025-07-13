@@ -2589,12 +2589,20 @@
       "source_type": "dóm"
     }
   ],
-  "317/2025": {
-    "supreme_case_number": "2025-106",
-    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=65b615fe-97c6-4451-9ee3-2ce4c8f86ccb",
-    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=5d199dbc-77f4-4dde-8896-5bfdedd422b8&verdictid=0ea7aee3-8877-4c55-b992-77ba19b69fb0",
-    "source_type": "ákvörðun"
-  },
+  "317/2025": [
+    {
+      "supreme_case_number": "2025-106",
+      "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=65b615fe-97c6-4451-9ee3-2ce4c8f86ccb",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=5d199dbc-77f4-4dde-8896-5bfdedd422b8&verdictid=0ea7aee3-8877-4c55-b992-77ba19b69fb0",
+      "source_type": "ákvörðun"
+    },
+    {
+      "supreme_case_number": "40/2025",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=484b0c74-399b-4487-aa4f-b22753f901a6",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=5d199dbc-77f4-4dde-8896-5bfdedd422b8&amp;verdictid=0ea7aee3-8877-4c55-b992-77ba19b69fb0",
+      "source_type": "dóm"
+    }
+  ],
   "318/2018": {
     "supreme_case_number": "2018-119",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=540449d9-0c84-4b2d-9df5-63a199a05d0b",
