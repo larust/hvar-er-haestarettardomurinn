@@ -133,7 +133,9 @@ def main():
     )
 
     # Save
-    os.makedirs(os.path.dirname(csv_file), exist_ok=True)
+    dir_name = os.path.dirname(csv_file)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
     df_combined.to_csv(csv_file, index=False, encoding="utf-8")
     added = len(df_combined) - len(df_existing)
     print(f"Done → {csv_file} ({added} new rows, total {len(df_combined)})")

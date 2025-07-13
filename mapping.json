@@ -1541,6 +1541,12 @@
     "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=21ce5fd4-66ca-4332-b4b5-3448f43e13df&verdictid=4e17bb41-faa2-423a-ba8a-9805cf10038f",
     "source_type": "ákvörðun"
   },
+  "238/2024": {
+    "supreme_case_number": "2025-110",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=93236edc-97a0-4b8a-9dda-45e5ab07be41",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?Id=7f39c663-1179-44a2-8cdc-2bd646d46cdc&amp;verdictid=6b3cd05d-5b14-4f3e-a2ca-95644f854fbc",
+    "source_type": "ákvörðun"
+  },
   "239/2019": {
     "supreme_case_number": "2020-295",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=52cc1b5a-4110-474b-aa17-782a7d1e6eb7",
@@ -2301,6 +2307,12 @@
     "supreme_case_number": "2023-123",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=5de8aed2-ce48-49f5-b510-a6bc20b87c00",
     "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=6631fd29-b3ca-4b4c-b119-4bfefee9ad23&verdictid=33788cc2-863b-4cb2-a400-6b2d4b54062a",
+    "source_type": "ákvörðun"
+  },
+  "288/2024": {
+    "supreme_case_number": "2025-114",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=c2a99dd0-0d4e-45c7-a133-824b07382697",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=a2625f3a-4968-4667-b94e-b5046fda5588&amp;verdictid=5292cfda-e0d3-47ae-a5a0-ece5a607f2c5",
     "source_type": "ákvörðun"
   },
   "289/2018": {

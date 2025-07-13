@@ -32,8 +32,8 @@ form.addEventListener('submit', evt => {
   // Compose the result HTML
   const listItems = rows.map(item => `
         <li>
-          Í máli <strong>${item.supreme_case_number}</strong> &nbsp;–&nbsp;
-          <a href="${item.supreme_case_link}" target="_blank" rel="noopener">Skoða ${item.source_type}</a>
+          Í máli <strong>${item.supremeCaseNumber}</strong> &nbsp;–&nbsp;
+          <a href="${item.supremeCaseLink}" target="_blank" rel="noopener">Skoða ${item.sourceType}</a>
         </li>`).join('');
 
   result.innerHTML = `
