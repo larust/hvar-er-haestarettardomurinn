@@ -2,6 +2,7 @@
     Loads mapping.json, handles look-up, supports 1-to-many results.
     ------------------------------------------------------------------ */
 
+
 let mapping = {};                           // filled on load
 
 const form   = document.getElementById('lookupForm');
@@ -21,15 +22,33 @@ fetch('last_updated.txt')
   .then(text => { updatedEl.innerHTML = text; })
   .catch(() => { updatedEl.textContent = 'Síðast uppfært óþekkt.'; });
 
+// Escape basic HTML entities to avoid injection when inserting user data
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[ch]));
+}
+
+// ---------- 1. Fetch mapping.json --------------------------------------
+fetch('mapping.json')
+  .then(r => r.json())
+  .then(data => { mapping = data; })
+  .catch(() => showError('Tókst ekki að hlaða gögnunum :('));
+
 // ---------- 2. Lookup on form submit -----------------------------------
 form.addEventListener('submit', evt => {
   evt.preventDefault();
 
   const key = input.value.trim();
+  const safeKey = escapeHtml(key);
   let rows  = mapping[key];
 
   if (!rows) {
-    showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${key}</b>.`);
+    showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${safeKey}</b>.`);
     return;
   }
 
@@ -47,8 +66,8 @@ form.addEventListener('submit', evt => {
 
   // Build the in-block label: link if we have one, else just bold text
   const keyHtml = firstAppealUrl
-    ? `<a href="${firstAppealUrl}" target="_blank" rel="noopener"><strong>${key}</strong></a>`
-    : `<strong>${key}</strong>`;
+    ? `<a href="${firstAppealUrl}" target="_blank" rel="noopener"><strong>${safeKey}</strong></a>`
+    : `<strong>${safeKey}</strong>`;
 
   // Always include this paragraph
   const firstAppealHtml = `
