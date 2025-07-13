@@ -7,12 +7,19 @@ let mapping = {};                           // filled on load
 const form   = document.getElementById('lookupForm');
 const input  = document.getElementById('appealInput');
 const result = document.getElementById('result');
+const updatedEl = document.getElementById('updated');
 
 // ---------- 1. Fetch mapping.json --------------------------------------
 fetch('mapping.json')
   .then(r => r.json())
   .then(data => { mapping = data; })
   .catch(() => showError('Tókst ekki að hlaða gögnunum :('));
+
+// ---------- 1b. Fetch last-updated timestamp ---------------------------
+fetch('last_updated.txt')
+  .then(r => r.text())
+  .then(text => { updatedEl.innerHTML = text; })
+  .catch(() => { updatedEl.textContent = 'Síðast uppfært óþekkt.'; });
 
 // ---------- 2. Lookup on form submit -----------------------------------
 form.addEventListener('submit', evt => {
