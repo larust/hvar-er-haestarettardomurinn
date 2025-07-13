@@ -11,8 +11,14 @@ from zoneinfo import ZoneInfo
 
 HEADERS = {"User-Agent": ( "Mozilla/5.0 (X11; Linux x86_64) ")}
 
-# New Supreme Court case-number pattern, e.g. "2025-106"
-SUPREME_RE = re.compile(r"\b(\d{4}-\d+)\b")
+# Supreme Court case-number patterns
+#
+#  * Decisions ("ákvarðanir") show the number after the prefix "Nr. ",
+#    e.g. "Nr. 2025-106".
+#  * Verdicts ("dómar") place the number after the prefix "Mál nr.",
+#    e.g. "Mál nr. 5/2025".
+SUPREME_DECISION_RE = re.compile(r"Nr\.\s*(\d{4}-\d+)")
+SUPREME_VERDICT_RE = re.compile(r"Mál nr\.\s*(\d+)/(20\d{2})")
 
 # Appeals-court link & number patterns (unchanged)
 APPEALS_URL_RE = re.compile(
@@ -43,9 +49,16 @@ def scrape_supreme(url: str) -> tuple[str, str, str, str]:
 
     # Supreme-Court case number
     sup_no = ""
-    for match in SUPREME_RE.findall(html):
-        sup_no = match
-        break
+    if "/domar/" in url:
+        # verdicts list the number after "Mál nr."
+        m = SUPREME_VERDICT_RE.search(html)
+        if m:
+            sup_no = f"{m.group(1)}/{m.group(2)}"
+    else:
+        # decisions list the number after "Nr."
+        m = SUPREME_DECISION_RE.search(html)
+        if m:
+            sup_no = m.group(1)
 
     # Find appeals link if any
     app_link = first_appeals_link(html) or ""
