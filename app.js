@@ -85,7 +85,7 @@ form.addEventListener('submit', evt => {
         : '';
     return `
         <li>
-          ${datePart} í máli nr. <strong>${item.supreme_case_number}</strong> &nbsp;–&nbsp;
+          <strong>${datePart}</strong> í máli nr. <strong>${item.supreme_case_number}</strong> &nbsp;–&nbsp;
           <a href="${item.supreme_case_link}" target="_blank" rel="noopener">Skoða ${item.source_type}</a>${decisionPart}
         </li>`;
   }).join('');
