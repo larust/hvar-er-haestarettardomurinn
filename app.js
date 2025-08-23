@@ -78,15 +78,15 @@ form.addEventListener('submit', evt => {
 
   // Compose the result HTML
   const listItems = rows.map(item => {
-    const datePart = item.verdict_date ? ` frá ${item.verdict_date}` : '';
+    const datePart = item.verdict_date ? `${item.verdict_date}` : '';
     const decisionPart =
       item.source_type.includes('ákvörðun') && item.decision_status
-        ? ` - ${item.decision_status}`
+        ? ` &nbsp;–&nbsp; ${item.decision_status}`
         : '';
     return `
         <li>
-          Í máli <strong>${item.supreme_case_number}</strong> &nbsp;–&nbsp;
-          <a href="${item.supreme_case_link}" target="_blank" rel="noopener">Skoða ${item.source_type}</a>${datePart}${decisionPart}
+          ${datePart} í máli nr. <strong>${item.supreme_case_number}</strong> &nbsp;–&nbsp;
+          <a href="${item.supreme_case_link}" target="_blank" rel="noopener">Skoða ${item.source_type}</a>${decisionPart}
         </li>`;
   }).join('');
 
