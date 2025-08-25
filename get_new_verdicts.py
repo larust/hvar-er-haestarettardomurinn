@@ -22,7 +22,7 @@ SUPREME_VERDICT_RE  = re.compile(r"Mál nr\.\s*(\d+)/(20\d{2})")
 
 # Appeals-court link & number patterns (unchanged)
 APPEALS_URL_RE = re.compile(
-    r"https://landsrettur\.is/domar-og-urskurdur/domur-urskurdur/[^\s\"'<>]+"
+    r"https://landsrettur\.is/domar-og-urskurdir/domur-urskurdur/[^\s\"'<>]+"
 )
 APPEALS_NO_RE  = re.compile(r"\b(\d+)/(20\d{2})\b")
 
