@@ -3841,6 +3841,14 @@
     "verdict_date": "17. desember 2024",
     "decision_status": "Hafnað"
   },
+  "332/2024": {
+    "supreme_case_number": "2025-128",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=25e0350f-6dc6-4216-8bf3-e8dd38658169",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=d410c435-bf23-49f6-8156-a8e5451e0bdd&amp;verdictid=a8f4dd2e-0c90-4edb-8ef2-24dbc75e6138",
+    "source_type": "ákvörðun",
+    "verdict_date": "10. september 2025",
+    "decision_status": "Hafnað"
+  },
   "333/2019": {
     "supreme_case_number": "2020-110",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=55e3ecac-9dca-4d98-9e98-da7730a65269",
@@ -6209,6 +6217,22 @@
       "decision_status": ""
     }
   ],
+  "468/2024": {
+    "supreme_case_number": "2025-136",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=bdab1d11-4840-4a61-8f05-ad4b5ff598fa",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?Id=d693b644-f4d7-419b-b36f-7341ed6b4844&amp;verdictid=ceb23be3-d97f-4c84-85dd-314883298f50",
+    "source_type": "ákvörðun",
+    "verdict_date": "9. september 2025",
+    "decision_status": "Hafnað"
+  },
+  "469/2024": {
+    "supreme_case_number": "2025-132",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=6ce10c4c-5ed8-4e81-873f-a6e9efb31baf",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=95ac9d63-fd10-4d9c-bc79-d9277efd1152&amp;verdictid=9a16ade1-b89e-40c0-b3f5-3971d0bc32de",
+    "source_type": "ákvörðun",
+    "verdict_date": "9. september 2025",
+    "decision_status": "Hafnað"
+  },
   "47/2018": {
     "supreme_case_number": "2018-165",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=cba2e3cc-3be0-44cf-b193-494a05538e58",
