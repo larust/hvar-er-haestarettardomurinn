@@ -1,3 +1,4 @@
 requests==2.32.4         # HTTP library
 pandas==2.3.1            # Data analysis library
 beautifulsoup4==4.13.4   # HTML/XML parsing library (bs4 namespace)
+pytest==8.3.3            # Testing framework
