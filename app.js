@@ -4,23 +4,61 @@
 
 
 let mapping = {};                           // filled on load
+let mappingLoaded = false;                  // flipped once data arrives
+let loadFailed = false;                     // prevents submitting on fatal error
 
 const form   = document.getElementById('lookupForm');
 const input  = document.getElementById('appealInput');
 const result = document.getElementById('result');
 const updatedEl = document.getElementById('updated');
+const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+const defaultBtnLabel = submitBtn ? submitBtn.textContent : '';
+
+function setLoading(isLoading) {
+  if (!submitBtn) return;
+  submitBtn.disabled = isLoading;
+  submitBtn.textContent = isLoading ? 'Hleður…' : defaultBtnLabel;
+}
+
+function setInputEnabled(enabled) {
+  input.disabled = !enabled;
+}
+
+function showStatus(msg) {
+  result.innerHTML = `<p class="status">${msg}</p>`;
+}
+
+setLoading(true);
+setInputEnabled(false);
+showStatus('Sæki gögn...');
 
 // ---------- 1. Fetch mapping.json --------------------------------------
 fetch('mapping.json')
   .then(r => r.json())
-  .then(data => { mapping = data; })
-  .catch(() => showError('Tókst ekki að hlaða gögnunum :('));
+  .then(data => {
+    mapping = data || {};
+    mappingLoaded = true;
+    setLoading(false);
+    setInputEnabled(true);
+    if (Object.keys(mapping).length === 0) {
+      showStatus('Engin gögn fundust.');
+    } else {
+      result.innerHTML = '';
+    }
+  })
+  .catch(() => {
+    loadFailed = true;
+    setLoading(false);
+    setInputEnabled(false);
+    if (submitBtn) submitBtn.disabled = true;
+    showError('Tókst ekki að hlaða gögnunum :(');
+  });
 
 // ---------- 1b. Fetch last-updated timestamp ---------------------------
 fetch('last_updated.txt')
   .then(r => r.text())
   .then(text => { updatedEl.innerHTML = text; })
-  .catch(() => { updatedEl.textContent = 'Síðast uppfært óþekkt.'; });
+  .catch(() => { updatedEl.textContent = 'Ekki vitað hvenær dómasafnið var síðast uppfært.'; });
 
 // Escape basic HTML entities to avoid injection when inserting user data
 function escapeHtml(str) {
@@ -33,15 +71,18 @@ function escapeHtml(str) {
   }[ch]));
 }
 
-// ---------- 1. Fetch mapping.json --------------------------------------
-fetch('mapping.json')
-  .then(r => r.json())
-  .then(data => { mapping = data; })
-  .catch(() => showError('Tókst ekki að hlaða gögnunum :('));
-
 // ---------- 2. Lookup on form submit -----------------------------------
 form.addEventListener('submit', evt => {
   evt.preventDefault();
+
+  if (!mappingLoaded) {
+    if (loadFailed) {
+      showError('Ekki er hægt að leita þar sem gögnin náðust ekki.');
+    } else {
+      showStatus('Bíð eftir að gögnin hlaðist…');
+    }
+    return;
+  }
 
   const key = input.value.trim();
   const safeKey = escapeHtml(key);
