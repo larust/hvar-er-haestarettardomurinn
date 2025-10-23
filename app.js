@@ -90,6 +90,7 @@ form.addEventListener('submit', evt => {
 
   if (!rows) {
     showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${safeKey}</b>.`);
+    trackSearch(key, false, 0);
     return;
   }
 
@@ -134,9 +135,24 @@ form.addEventListener('submit', evt => {
   result.innerHTML = `
       ${firstAppealHtml}
       <ul>${listItems}</ul>`;
+
+  trackSearch(key, true, rows.length);
 });
 
 // ---------- 3. Helper ---------------------------------------------------
 function showError(msg) {
   result.innerHTML = `<p class="error">${msg}</p>`;
+}
+
+function trackSearch(term, hasMatch, matchesCount) {
+  if (typeof window.gtag !== 'function') return;
+  try {
+    window.gtag('event', 'appeal_search', {
+      search_term: term,
+      has_match: hasMatch,
+      matches_count: matchesCount,
+    });
+  } catch (err) {
+    console.warn('gtag tracking failed', err);
+  }
 }
