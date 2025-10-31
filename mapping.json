@@ -731,6 +731,14 @@
     "verdict_date": "22. janúar 2019",
     "decision_status": "Hafnað"
   },
+  "155/2024": {
+    "supreme_case_number": "2025-148",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=f4e598e5-b055-4394-99ba-665a4ca29d8f",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=67b12f3c-8216-48ad-aaba-ae0cde3ccc8d&amp;verdictid=5eab1985-b165-4388-8fb0-d0200875aed2",
+    "source_type": "ákvörðun",
+    "verdict_date": "28. október 2025",
+    "decision_status": "Hafnað"
+  },
   "156/2021": {
     "supreme_case_number": "2021-94",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=444672f2-79ec-4877-bc6a-e8c22d899437",
@@ -1225,6 +1233,14 @@
       "decision_status": ""
     }
   ],
+  "188/2025": {
+    "supreme_case_number": "55/2025",
+    "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=a6c184d0-e33b-40d0-8961-0690d3e3ad54",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=c765ec96-0776-4245-ad4b-627494af92d0&amp;verdictid=f3799878-3400-413b-8bc7-17c03f1f4f39",
+    "source_type": "dóm",
+    "verdict_date": "30. október 2025",
+    "decision_status": ""
+  },
   "189/2018": {
     "supreme_case_number": "8/2018",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=caef0d6d-d2dc-4ea4-b642-c34f451dd452",
@@ -1581,6 +1597,14 @@
       "decision_status": ""
     }
   ],
+  "205/2025": {
+    "supreme_case_number": "2025-147",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=e1d6b5f5-7fb9-47c1-bd04-72e1efba25e7",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=89c5fc01-9ddd-4c11-b995-3275fb57c977&amp;verdictid=8d5b7012-4b8a-41a5-8d23-67235b75e5f9",
+    "source_type": "ákvörðun",
+    "verdict_date": "28. október 2025",
+    "decision_status": "Samþykkt"
+  },
   "207/2022": [
     {
       "supreme_case_number": "2023-60",
