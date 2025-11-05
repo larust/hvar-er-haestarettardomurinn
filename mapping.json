@@ -2877,14 +2877,24 @@
     "verdict_date": "10. desember 2024",
     "decision_status": "Hafnað"
   },
-  "274/2023": {
-    "supreme_case_number": "2024-167",
-    "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ce443e6a-4914-4d5f-9bde-cd9f06eb6776",
-    "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=f3facfe3-3213-4657-89c8-ee93348746e3&verdictid=ae67a3a3-8121-43f9-8190-fdb09c11aea8",
-    "source_type": "ákvörðun",
-    "verdict_date": "29. janúar 2025",
-    "decision_status": "Samþykkt"
-  },
+  "274/2023": [
+    {
+      "supreme_case_number": "2024-167",
+      "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=ce443e6a-4914-4d5f-9bde-cd9f06eb6776",
+      "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=f3facfe3-3213-4657-89c8-ee93348746e3&verdictid=ae67a3a3-8121-43f9-8190-fdb09c11aea8",
+      "source_type": "ákvörðun",
+      "verdict_date": "29. janúar 2025",
+      "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "6/2025",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=fbf7ad47-6d80-4b93-bc38-2e0443f16cda",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=f3facfe3-3213-4657-89c8-ee93348746e3&amp;verdictid=ae67a3a3-8121-43f9-8190-fdb09c11aea8",
+      "source_type": "dóm",
+      "verdict_date": "5. nóvember 2025",
+      "decision_status": ""
+    }
+  ],
   "275/2018": {
     "supreme_case_number": "30/2018",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=2878e2f5-0e48-46c3-8729-25e387d4d87b",
