@@ -6,6 +6,8 @@
 let mapping = {};                           // filled on load
 let mappingLoaded = false;                  // flipped once data arrives
 let loadFailed = false;                     // prevents submitting on fatal error
+const MAX_SUGGESTIONS = 3;                  // how many near matches to show
+const MAX_SUGGESTION_DISTANCE = 3;          // skip if best match is farther away
 
 const form   = document.getElementById('lookupForm');
 const input  = document.getElementById('appealInput');
@@ -74,7 +76,20 @@ function escapeHtml(str) {
 // ---------- 2. Lookup on form submit -----------------------------------
 form.addEventListener('submit', evt => {
   evt.preventDefault();
+  const key = input.value.trim();
+  performLookup(key);
+});
 
+result.addEventListener('click', evt => {
+  const button = evt.target.closest('.suggestion-button');
+  if (!button) return;
+  const suggestedKey = button.dataset.case;
+  if (!suggestedKey) return;
+  input.value = suggestedKey;
+  performLookup(suggestedKey);
+});
+
+function performLookup(key) {
   if (!mappingLoaded) {
     if (loadFailed) {
       showError('Ekki er hægt að leita þar sem gögnin náðust ekki.');
@@ -84,12 +99,29 @@ form.addEventListener('submit', evt => {
     return;
   }
 
-  const key = input.value.trim();
   const safeKey = escapeHtml(key);
   let rows  = mapping[key];
 
   if (!rows) {
-    showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${safeKey}</b>.`);
+    const suggestions = getSuggestions(key);
+    if (suggestions.length) {
+      const suggestionList = suggestions
+        .map(item => `
+          <li>
+            <button type="button" class="suggestion-button" data-case="${item}">
+              ${escapeHtml(item)}
+            </button>
+          </li>`)
+        .join('');
+      result.innerHTML = `
+        <p class="error">
+          Mál nr. <b>${safeKey}</b> fannst ekki.<br>Getur verið að þú hafir verið að leita að:
+        </p>
+        <ul>${suggestionList}</ul>
+      `;
+    } else {
+      showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${safeKey}</b>.`);
+    }
     trackSearch(key, false, 0);
     return;
   }
@@ -137,11 +169,81 @@ form.addEventListener('submit', evt => {
       <ul>${listItems}</ul>`;
 
   trackSearch(key, true, rows.length);
-});
+}
 
 // ---------- 3. Helper ---------------------------------------------------
 function showError(msg) {
   result.innerHTML = `<p class="error">${msg}</p>`;
+}
+
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  const lenA = a.length;
+  const lenB = b.length;
+  if (lenA === 0) return lenB;
+  if (lenB === 0) return lenA;
+
+  const prev = new Array(lenB + 1);
+  const curr = new Array(lenB + 1);
+
+  for (let j = 0; j <= lenB; j += 1) prev[j] = j;
+
+  for (let i = 1; i <= lenA; i += 1) {
+    curr[0] = i;
+    const charA = a.charAt(i - 1);
+
+    for (let j = 1; j <= lenB; j += 1) {
+      const charB = b.charAt(j - 1);
+      const cost = charA === charB ? 0 : 1;
+      curr[j] = Math.min(
+        curr[j - 1] + 1,        // insertion
+        prev[j] + 1,            // deletion
+        prev[j - 1] + cost,     // substitution
+      );
+    }
+
+    for (let j = 0; j <= lenB; j += 1) {
+      prev[j] = curr[j];
+    }
+  }
+
+  return prev[lenB];
+}
+
+function weightedDistance(inputCase, inputYear, candidate) {
+  const [candCase = '', candYear = ''] = candidate.split('/');
+  const caseDistance = levenshtein(inputCase, candCase);
+  const yearDistance = levenshtein(inputYear, candYear);
+  return caseDistance + yearDistance * 1.5;
+}
+
+function getSuggestions(term) {
+  if (!term || !mapping || !Object.keys(mapping).length) return [];
+  const [inputCase = '', inputYear = ''] = term.split('/');
+  const keys = Object.keys(mapping);
+  const sameCase = inputCase
+    ? keys.filter(key => key.split('/')[0] === inputCase)
+    : [];
+  const sameYear = inputYear
+    ? keys.filter(key => key.endsWith(`/${inputYear}`))
+    : [];
+
+  const candidates = sameCase.length
+    ? sameCase
+    : (sameYear.length >= MAX_SUGGESTIONS ? sameYear : keys);
+
+  const ranked = candidates
+    .map(key => ({
+      key,
+      score: weightedDistance(inputCase, inputYear, key),
+    }))
+    .sort((a, b) => a.score - b.score);
+
+  if (!ranked.length || ranked[0].score > MAX_SUGGESTION_DISTANCE) return [];
+
+  return ranked
+    .slice(0, MAX_SUGGESTIONS)
+    .map(item => item.key);
 }
 
 function trackSearch(term, hasMatch, matchesCount) {
