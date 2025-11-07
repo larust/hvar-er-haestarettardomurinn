@@ -228,9 +228,17 @@ function getSuggestions(term) {
     ? keys.filter(key => key.endsWith(`/${inputYear}`))
     : [];
 
-  const candidates = sameCase.length
-    ? sameCase
-    : (sameYear.length >= MAX_SUGGESTIONS ? sameYear : keys);
+  const candidateSet = new Set();
+  sameCase.forEach(key => candidateSet.add(key));
+  sameYear.forEach(key => candidateSet.add(key));
+
+  if (!candidateSet.size) {
+    keys.forEach(key => candidateSet.add(key));
+  } else if (candidateSet.size < MAX_SUGGESTIONS) {
+    keys.forEach(key => candidateSet.add(key));
+  }
+
+  const candidates = Array.from(candidateSet);
 
   const ranked = candidates
     .map(key => ({
