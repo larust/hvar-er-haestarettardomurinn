@@ -5781,6 +5781,14 @@
     "verdict_date": "6. febrúar 2025",
     "decision_status": "Hafnað"
   },
+  "444/2025": {
+    "supreme_case_number": "2025-142",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=37e1ad05-60f4-4111-9a30-74135d979b9a",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=8486aa60-900c-463b-a8b4-e53558f5a612&amp;verdictid=fdfd11db-7ac2-4213-8eb7-b208bd0a2c5f",
+    "source_type": "ákvörðun",
+    "verdict_date": "19. nóvember 2025",
+    "decision_status": "Hafnað"
+  },
   "445/2018": {
     "supreme_case_number": "14/2019",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=4fa0065b-c289-42b3-a60b-7bb0df91ff12",
@@ -6577,14 +6585,24 @@
     "verdict_date": "25. janúar 2022",
     "decision_status": "Hafnað"
   },
-  "488/2022": {
-    "supreme_case_number": "2024-110",
-    "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=e1b7130b-2a0f-46e0-be75-c3cb2abc50a4",
-    "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=1dcc266b-0802-4cb3-9523-2973f0536be8&verdictid=c2a0225b-877c-4fed-9501-79fa331258d7",
-    "source_type": "ákvörðun",
-    "verdict_date": "31. október 2024",
-    "decision_status": "Samþykkt"
-  },
+  "488/2022": [
+    {
+      "supreme_case_number": "2024-110",
+      "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=e1b7130b-2a0f-46e0-be75-c3cb2abc50a4",
+      "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=1dcc266b-0802-4cb3-9523-2973f0536be8&verdictid=c2a0225b-877c-4fed-9501-79fa331258d7",
+      "source_type": "ákvörðun",
+      "verdict_date": "31. október 2024",
+      "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "48/2024",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=c9067aa8-2487-462d-94d4-6ec0fdfe3d62",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=1dcc266b-0802-4cb3-9523-2973f0536be8&amp;verdictid=c2a0225b-877c-4fed-9501-79fa331258d7",
+      "source_type": "dóm",
+      "verdict_date": "24. nóvember 2025",
+      "decision_status": ""
+    }
+  ],
   "489/2023": {
     "supreme_case_number": "54/2024",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=0f2f6428-7b6a-11eb-947c-005056bc0bdb&id=dd085df6-e9bc-43fc-a786-48dcb0d8bf60",
