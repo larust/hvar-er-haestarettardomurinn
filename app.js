@@ -9,8 +9,8 @@ let loadFailed = false;                     // prevents submitting on fatal erro
 const MAX_SUGGESTIONS = 3;                  // how many near matches to show
 const MAX_SUGGESTION_DISTANCE = 3;          // skip if best match is farther away
 
-const form   = document.getElementById('lookupForm');
-const input  = document.getElementById('appealInput');
+const form = document.getElementById('lookupForm');
+const input = document.getElementById('appealInput');
 const result = document.getElementById('result');
 const updatedEl = document.getElementById('updated');
 const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
@@ -27,7 +27,7 @@ function setInputEnabled(enabled) {
 }
 
 function showStatus(msg) {
-  result.innerHTML = `<p class="status">${msg}</p>`;
+  result.innerHTML = `<div class="status">${msg}</div>`;
 }
 
 setLoading(true);
@@ -100,7 +100,7 @@ function performLookup(key) {
   }
 
   const safeKey = escapeHtml(key);
-  let rows  = mapping[key];
+  let rows = mapping[key];
 
   if (!rows) {
     const suggestions = getSuggestions(key);
@@ -114,9 +114,10 @@ function performLookup(key) {
           </li>`)
         .join('');
       result.innerHTML = `
-        <p class="error">
-          Mál nr. <b>${safeKey}</b> fannst ekki.<br>Getur verið að þú hafir verið að leita að:
-        </p>
+        <div class="error">
+          Mál nr. <b>${safeKey}</b> fannst ekki.<br>
+          <span style="font-size: 0.9em; margin-top:0.5em; display:block;">Getur verið að þú hafir verið að leita að:</span>
+        </div>
         <ul>${suggestionList}</ul>
       `;
     } else {
@@ -145,9 +146,9 @@ function performLookup(key) {
 
   // Always include this paragraph
   const firstAppealHtml = `
-    <p>
-      Landsréttarmál ${keyHtml} hefur verið til umfjöllunar í Hæstarétti:
-    </p>
+    <div class="intro-text">
+       Landsréttarmál ${keyHtml} hefur verið til umfjöllunar í Hæstarétti:
+    </div>
   `;
 
   // Compose the result HTML
@@ -155,12 +156,19 @@ function performLookup(key) {
     const datePart = item.verdict_date ? `${item.verdict_date}` : '';
     const decisionPart =
       item.source_type.includes('ákvörðun') && item.decision_status
-        ? ` &nbsp;–&nbsp; ${item.decision_status}`
+        ? `<span style="opacity:0.8"> – ${item.decision_status}</span>`
         : '';
+
     return `
         <li>
-          <strong>${datePart}</strong> í máli nr. <strong>${item.supreme_case_number}</strong> &nbsp;–&nbsp;
-          <a href="${item.supreme_case_link}" target="_blank" rel="noopener">Skoða ${item.source_type}</a>${decisionPart}
+          <div class="verdict-header">
+             <a href="${item.supreme_case_link}" target="_blank" rel="noopener">
+               Skoða ${item.source_type} (Mál nr. ${item.supreme_case_number})
+             </a>
+          </div>
+          <div class="verdict-meta">
+            ${datePart}${decisionPart}
+          </div>
         </li>`;
   }).join('');
 
@@ -173,7 +181,7 @@ function performLookup(key) {
 
 // ---------- 3. Helper ---------------------------------------------------
 function showError(msg) {
-  result.innerHTML = `<p class="error">${msg}</p>`;
+  result.innerHTML = `<div class="error">${msg}</div>`;
 }
 
 function levenshtein(a, b) {
