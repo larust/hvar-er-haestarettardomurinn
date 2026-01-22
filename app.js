@@ -54,6 +54,14 @@ fetch('mapping.json')
       showStatus('Engin gögn fundust.');
     } else {
       result.innerHTML = '';
+
+      // Check for deep link
+      const params = new URLSearchParams(window.location.search);
+      const caseParam = params.get('case');
+      if (caseParam) {
+        input.value = caseParam;
+        performLookup(caseParam);
+      }
     }
   })
   .catch(() => {
@@ -108,6 +116,11 @@ function performLookup(key) {
   }
 
   const safeKey = escapeHtml(key);
+
+  // Update URL without reloading
+  const newUrl = `${window.location.pathname}?case=${encodeURIComponent(key)}`;
+  window.history.pushState({ path: newUrl }, '', newUrl);
+
   let rows = mapping[key];
 
   if (!rows) {
