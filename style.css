@@ -155,8 +155,15 @@ button:disabled {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 ul {
@@ -214,11 +221,32 @@ li a:hover {
 }
 
 .intro-text {
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.intro-text a,
+.intro-text a:visited {
+  color: var(--color-accent);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.intro-text a:hover {
+  color: var(--color-accent-hover);
 }
 
 .verdict-meta {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.status-approved {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.status-rejected {
+  color: var(--color-error);
+  font-weight: 700;
 }

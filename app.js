@@ -42,6 +42,14 @@ fetch('mapping.json')
     mappingLoaded = true;
     setLoading(false);
     setInputEnabled(true);
+
+    // Pick a random case for the placeholder
+    const keys = Object.keys(mapping);
+    if (keys.length > 0) {
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      input.placeholder = `t.d. ${randomKey}`;
+    }
+
     if (Object.keys(mapping).length === 0) {
       showStatus('Engin gögn fundust.');
     } else {
@@ -154,16 +162,23 @@ function performLookup(key) {
   // Compose the result HTML
   const listItems = rows.map(item => {
     const datePart = item.verdict_date ? `${item.verdict_date}` : '';
-    const decisionPart =
-      item.source_type.includes('ákvörðun') && item.decision_status
-        ? `<span style="opacity:0.8"> – ${item.decision_status}</span>`
-        : '';
+
+    let decisionPart = '';
+    if (item.source_type.includes('ákvörðun') && item.decision_status) {
+      if (item.decision_status.includes('Samþykkt')) {
+        decisionPart = ` – <span class="status-approved">${item.decision_status}</span>`;
+      } else if (item.decision_status.includes('Hafnað')) {
+        decisionPart = ` – <span class="status-rejected">${item.decision_status}</span>`;
+      } else {
+        decisionPart = ` <span style="opacity:0.8"> – ${item.decision_status}</span>`;
+      }
+    }
 
     return `
         <li>
           <div class="verdict-header">
              <a href="${item.supreme_case_link}" target="_blank" rel="noopener">
-               Skoða ${item.source_type} (Mál nr. ${item.supreme_case_number})
+               Skoða ${item.source_type} í máli nr. ${item.supreme_case_number}
              </a>
           </div>
           <div class="verdict-meta">

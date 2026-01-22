@@ -1,43 +1,38 @@
 <!doctype html>
 <html lang="is">
+
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X4R3LEGRPN"></script>
   <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-X4R3LEGRPN');
+    gtag('config', 'G-X4R3LEGRPN');
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hvar er Hæstaréttardómurinn?</title>
-  
+  <title>Finna dóma og ákvarðanir Hæstaréttar</title>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
-    <h1>Hvar er Hæstaréttardómurinn?</h1>
-    <p class="subtitle">Finndu dóma og ákvarðanir út frá númeri Landsréttarmáls</p>
-    
+    <h1>Finna dóma og ákvarðanir Hæstaréttar</h1>
     <p id="updated" class="updated"></p>
 
     <form id="lookupForm">
       <div class="input-group">
         <label for="appealInput">Landsréttarmálið nr.:</label>
-        <input id="appealInput" type="text"
-               pattern="[0-9]{1,4}/[0-9]{4}"
-               placeholder="t.d. 731/2022"
-               required
-               autocomplete="off"
-               autofocus>
+        <input id="appealInput" type="text" pattern="[0-9]{1,4}/[0-9]{4}" placeholder="t.d. 731/2022" required
+          autocomplete="off" autofocus>
       </div>
       <button type="submit">Leita</button>
     </form>
@@ -47,4 +42,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>
