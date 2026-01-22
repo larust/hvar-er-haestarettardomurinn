@@ -1,286 +1,307 @@
 import os
 import re
-import requests
 import json
-import pandas as pd
+import logging
+import time
+from typing import Optional, List, Set, Tuple, Dict, Any
 from pathlib import Path
-from bs4 import BeautifulSoup, Tag
-from urllib.parse import urlparse, urljoin
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from urllib.parse import urlparse, urljoin
 
-HEADERS = {"User-Agent": ("Mozilla/5.0 (X11; Linux x86_64) ")}
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup, Tag
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
-# Supreme Court case-number patterns
-#
-#  * Decisions ("ákvarðanir") show the number after the prefix "Nr. ",
-#    e.g. "Nr. 2025-106".
-#  * Verdicts ("dómar") place the number after the prefix "Mál nr.",
-#    e.g. "Mál nr. 5/2025".
+# --- Configuration & Constants ---
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+logger = logging.getLogger(__name__)
+
+BASE_URL = "https://www.haestirettur.is"
+HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"}
+
+# Regex Patterns
 SUPREME_DECISION_RE = re.compile(r"Nr\.\s*(\d{4}-\d+)")
 SUPREME_VERDICT_RE  = re.compile(r"Mál nr\.\s*(\d+)/(20\d{2})")
-
-# Appeals-court link & number patterns (unchanged)
-APPEALS_URL_RE = re.compile(
-    r"https://landsrettur\.is/domar-og-urskurdir/domur-urskurdur/[^\s\"'<>]+"
-)
+APPEALS_URL_RE = re.compile(r"https://landsrettur\.is/domar-og-urskurdir/domur-urskurdur/[^\s\"'<>]+")
 APPEALS_NO_RE  = re.compile(r"\b(\d+)/(20\d{2})\b")
+MONTHS_PATTERN = "janúar|febrúar|mars|apríl|maí|júní|júlí|ágúst|september|október|nóvember|desember"
+DATE_RE = re.compile(rf"\b(\d{{1,2}}\.\s+(?:{MONTHS_PATTERN})\s+20\d{{2}})\b", re.I)
 
-# --- Date extraction (Icelandic months) ---
-MONTHS = "janúar|febrúar|mars|apríl|maí|júní|júlí|ágúst|september|október|nóvember|desember"
-DATE_RE = re.compile(rf"\b(\d{{1,2}}\.\s+(?:{MONTHS})\s+20\d{{2}})\b", re.I)
+class Scraper:
+    def __init__(self, retries: int = 3, backoff_factor: float = 0.5):
+        self.session = requests.Session()
+        self.session.headers.update(HEADERS)
+        
+        retry_strategy = Retry(
+            total=retries,
+            backoff_factor=backoff_factor,
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["GET"]
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        self.session.mount("https://", adapter)
+        self.session.mount("http://", adapter)
 
-def extract_verdict_date(text: str) -> str:
-    """Extract a date like '15. maí 2025' (Icelandic), else try ISO '2025-05-15' as a fallback."""
-    if not text:
-        return ""
-    m = DATE_RE.search(text)
-    if m:
-        return m.group(1)
-    return ""
+    def fetch_page(self, url: str) -> Optional[str]:
+        try:
+            response = self.session.get(url, timeout=30)
+            response.raise_for_status()
+            return response.text
+        except requests.RequestException as e:
+            logger.error(f"Error fetching {url}: {e}")
+            return None
 
-# --- "Lykilorð" helpers for ákvarðanir status ---
-def _iter_forward_for_list(label: Tag) -> list[str]:
-    """From a 'Lykilorð' label tag, walk forward to the next UL/OL and return LI texts."""
-    items: list[str] = []
-    for sib in label.next_siblings:
-        if isinstance(sib, Tag):
-            name = sib.name.lower()
-            if name in {"h2", "h3"}:
+    def extract_verdict_date(self, text: str) -> str:
+        if not text:
+            return ""
+        m = DATE_RE.search(text)
+        return m.group(1) if m else ""
+
+    def _iter_forward_for_list(self, label: Tag) -> List[str]:
+        items: List[str] = []
+        # Check siblings
+        for sib in label.next_siblings:
+            if isinstance(sib, Tag):
+                if sib.name in {"h2", "h3", "h4"}:
+                    break
+                if sib.name in {"ul", "ol"}:
+                    items.extend(li.get_text(" ", strip=True) for li in sib.find_all("li"))
+                    return items # Found the list, return
+        
+        # Check parent's next sibling (sometimes structure is weird)
+        parent = label.parent
+        if isinstance(parent, Tag):
+            nxt = parent.find_next(lambda t: isinstance(t, Tag) and t.name in {"ul", "ol"})
+            if nxt:
+                items.extend(li.get_text(" ", strip=True) for li in nxt.find_all("li"))
+        return items
+
+    def extract_keywords(self, soup: BeautifulSoup) -> List[str]:
+        label = None
+        for tag in soup.find_all(lambda t: isinstance(t, Tag) and t.name in {"h2", "h3", "h4", "strong", "b", "dt"}):
+            txt = tag.get_text(" ", strip=True)
+            if txt and "lykilorð" in txt.casefold():
+                label = tag
                 break
-            if name in {"ul", "ol"}:
-                for li in sib.find_all("li"):
-                    txt = li.get_text(" ", strip=True)
-                    if txt:
-                        items.append(txt)
-                if items:
-                    return items
-    parent = label.parent
-    if isinstance(parent, Tag):
-        nxt = parent.find_next(lambda t: isinstance(t, Tag) and t.name.lower() in {"ul", "ol"})
-        if nxt:
-            for li in nxt.find_all("li"):
-                txt = li.get_text(" ", strip=True)
-                if txt:
-                    items.append(txt)
-    return items
+        
+        if label:
+            items = self._iter_forward_for_list(label)
+            if items:
+                return items
+        
+        # Fallback: all LIs in main
+        main = soup.find("main") or soup
+        return [li.get_text(strip=True) for li in main.find_all("li")]
 
-def extract_keywords(soup: BeautifulSoup) -> list[str]:
-    """
-    Robustly find the Lykilorð list:
-      1) look for a header-like tag containing 'Lykilorð'
-      2) otherwise, fall back to all <li> in main content
-    """
-    label = None
-    for tag in soup.find_all(lambda t: isinstance(t, Tag) and t.name in {"h2", "h3", "h4", "strong", "b", "dt"}):
-        txt = tag.get_text(" ", strip=True)
-        if txt and "lykilorð" in txt.casefold():
-            label = tag
-            break
-    if label:
-        items = _iter_forward_for_list(label)
-        if items:
-            return items
-    main = soup.find("main") or soup
-    return [li.get_text(strip=True) for li in main.find_all("li")]
-
-def decide_status(soup: BeautifulSoup, page_text: str) -> str:
-    """Return 'Samþykkt', 'Hafnað' or ''."""
-    kws = [k.casefold() for k in extract_keywords(soup)]
-    if any("samþykkt" in k for k in kws):
-        return "Samþykkt"
-    if any("hafnað" in k for k in kws):
-        return "Hafnað"
-    t = page_text.casefold()
-    i_s = t.find("samþykkt")
-    i_h = t.find("hafnað")
-    if i_s != -1 and (i_h == -1 or i_s < i_h):
-        return "Samþykkt"
-    if i_h != -1:
-        return "Hafnað"
-    return ""
-
-def appeals_case_number(url: str) -> str:
-    print(f"  → fetching appeals page {url}")
-    try:
-        page = requests.get(url, headers=HEADERS, timeout=30).text
-    except Exception:
-        print(f"    ! failed to fetch appeals page")
+    def decide_status(self, soup: BeautifulSoup, page_text: str) -> str:
+        keywords = [k.casefold() for k in self.extract_keywords(soup)]
+        if any("samþykkt" in k for k in keywords):
+            return "Samþykkt"
+        if any("hafnað" in k for k in keywords):
+            return "Hafnað"
+        
+        # Text search fallback
+        t_lower = page_text.casefold()
+        i_s = t_lower.find("samþykkt")
+        i_h = t_lower.find("hafnað")
+        
+        if i_s != -1 and (i_h == -1 or i_s < i_h):
+            return "Samþykkt"
+        if i_h != -1:
+            return "Hafnað"
         return ""
-    for num, year in APPEALS_NO_RE.findall(page):
-        if int(year) >= 2018:
-            return f"{num}/{year}"
-    return ""
 
-def first_appeals_link(html: str) -> str:
-    m = APPEALS_URL_RE.search(html)
-    return m.group(0) if m else ""
+    def get_appeals_case_number(self, url: str) -> str:
+        logger.debug(f"Checking appeals link: {url}")
+        html = self.fetch_page(url)
+        if not html:
+            return ""
+        
+        # Find all matches, filter for reasonable years (e.g. >= 2018)
+        for num, year in APPEALS_NO_RE.findall(html):
+            if int(year) >= 2018:
+                return f"{num}/{year}"
+        return ""
 
-def scrape_supreme(url: str, source_type: str) -> tuple[str, str, str, str, str, str]:
-    """
-    Fetch one Supreme Court page and return:
-      (supreme_case_number, supreme_case_link, appeals_case_number, appeals_case_link, verdict_date, decision_status)
-    decision_status is only filled for ákvarðanir; empty for dómar.
-    """
-    html = requests.get(url, headers=HEADERS, timeout=30).text
-    soup = BeautifulSoup(html, "html.parser")
-    page_text = soup.get_text(" ", strip=True)
+    def parse_supreme_page(self, url: str, source_type: str) -> Dict[str, str]:
+        html = self.fetch_page(url)
+        if not html:
+            return {}
+        
+        soup = BeautifulSoup(html, "html.parser")
+        page_text = soup.get_text(" ", strip=True)
 
-    # Supreme-Court case number
-    sup_no = ""
-    if "/domar/" in url:
-        m = SUPREME_VERDICT_RE.search(html)
-        if m:
-            sup_no = f"{m.group(1)}/{m.group(2)}"
-    else:
-        m = SUPREME_DECISION_RE.search(html)
-        if m:
-            sup_no = m.group(1)
+        # 1. Supreme Case Number
+        sup_no = ""
+        if "/domar/" in url:
+            m = SUPREME_VERDICT_RE.search(html)
+            if m:
+                sup_no = f"{m.group(1)}/{m.group(2)}"
+        else: # decisions
+            m = SUPREME_DECISION_RE.search(html)
+            if m:
+                sup_no = m.group(1)
 
-    # Date (common to both)
-    verdict_date = extract_verdict_date(page_text)
+        # 2. Date
+        verdict_date = self.extract_verdict_date(page_text)
 
-    # Status (only for ákvarðanir)
-    source_cf = source_type.casefold()
-    is_decision = any(x in source_cf for x in ["ákvörðun", "akvörðun", "akvordun"])
-    decision_status = decide_status(soup, page_text) if is_decision else ""
+        # 3. Status (Decisions only)
+        decision_status = ""
+        if "ákvörðun" in source_type.casefold():
+             decision_status = self.decide_status(soup, page_text)
 
-    # Find appeals link if any
-    app_link = first_appeals_link(html) or ""
-    app_no = ""
-    if app_link:
-        parsed = urlparse(app_link)
-        dom = parsed.netloc.lower()
-        if dom == "landsrettur.is" or dom.endswith(".landsrettur.is"):
-            app_no = appeals_case_number(app_link)
-        else:
-            app_link = ""  # wrong domain → drop
+        # 4. Appeals Link & Number
+        app_link_match = APPEALS_URL_RE.search(html)
+        app_link = app_link_match.group(0) if app_link_match else ""
+        app_no = ""
+        
+        if app_link:
+            parsed = urlparse(app_link)
+            domain = parsed.netloc.lower()
+            if domain == "landsrettur.is" or domain.endswith(".landsrettur.is"):
+                app_no = self.get_appeals_case_number(app_link)
+            else:
+                app_link = "" # Discard invalid domain
 
-    return sup_no, url, app_no, app_link, verdict_date, decision_status
+        return {
+            "supreme_case_number": sup_no,
+            "supreme_case_link": url,
+            "appeals_case_number": app_no,
+            "appeals_case_link": app_link,
+            "source_type": source_type,
+            "verdict_date": verdict_date,
+            "decision_status": decision_status,
+        }
 
-def get_verdict_links() -> list[str]:
-    base = "https://www.haestirettur.is"
-    list_page = f"{base}/domar/"
-    resp = requests.get(list_page, headers=HEADERS, timeout=30)
-    resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "html.parser")
-    links = set()
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if href.startswith("/domar/_domur/"):  # only detail pages
-            links.add(urljoin(base, href))
-    return sorted(links)
+    def get_links(self, path: str) -> List[str]:
+        full_url = urljoin(BASE_URL, path)
+        html = self.fetch_page(full_url)
+        if not html:
+            return []
+        
+        soup = BeautifulSoup(html, "html.parser")
+        links = set()
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            # Check for detail pages
+            if href.startswith("/domar/_domur/") or (href.startswith("/akvardanir/") and href != "/akvardanir/"):
+                links.add(urljoin(BASE_URL, href))
+        return sorted(list(links))
 
-def get_decision_links() -> list[str]:
-    base = "https://www.haestirettur.is"
-    list_page = f"{base}/akvardanir/"
-    resp = requests.get(list_page, headers=HEADERS, timeout=30)
-    resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "html.parser")
-    links = set()
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if href.startswith("/akvardanir/") and href != "/akvardanir/":
-            links.add(urljoin(base, href))
-    return sorted(links)
+class DataManager:
+    def __init__(self, csv_path: str = "allir_domar_og_akvardanir.csv", json_path: str = "mapping.json"):
+        self.csv_path = Path(csv_path)
+        self.json_path = Path(json_path)
+        self.columns = [
+            "supreme_case_number",
+            "supreme_case_link",
+            "appeals_case_number",
+            "appeals_case_link",
+            "source_type",
+            "verdict_date",
+            "decision_status",
+        ]
+
+    def load_existing_data(self) -> pd.DataFrame:
+        if self.csv_path.exists():
+            df = pd.read_csv(self.csv_path, dtype=str)
+            # Ensure all cols exist
+            for col in self.columns:
+                if col not in df.columns:
+                    df[col] = ""
+            return df[self.columns]
+        return pd.DataFrame(columns=self.columns)
+
+    def save_csv(self, new_rows: List[Dict[str, str]]):
+        if not new_rows:
+            logger.info("No new rows to save.")
+            return
+
+        df_existing = self.load_existing_data()
+        df_new = pd.DataFrame(new_rows, columns=self.columns)
+        
+        # Filter rows that have an appeals case number
+        df_new = df_new[df_new["appeals_case_number"].str.strip().astype(bool)]
+        
+        # Combine
+        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+        # Deduplicate on supreme case number, keeping existing (oldest scrape might be better? or overwrite? 
+        # The original script kept 'first' which implies existing. Let's stick to that.)
+        df_combined = df_combined.drop_duplicates(subset="supreme_case_number", keep="first")
+        
+        df_combined.to_csv(self.csv_path, index=False, encoding="utf-8")
+        added_count = len(df_combined) - len(df_existing)
+        logger.info(f"Updated CSV. Total rows: {len(df_combined)}. New rows: {added_count}")
+
+    def generate_json_mapping(self):
+        if not self.csv_path.exists():
+            logger.warning("No CSV file found to generate JSON mapping.")
+            return
+
+        df = pd.read_csv(self.csv_path, encoding="utf-8-sig", dtype=str)
+        
+        # Sanitization
+        for col in self.columns:
+             if col not in df.columns: df[col] = ""
+
+        df["appeals_case_link"] = df["appeals_case_link"].fillna("")
+        for col in df.select_dtypes(include="object"):
+            df[col] = df[col].fillna("").str.strip()
+
+        # Grouping
+        mapping = {}
+        grouped = df.groupby("appeals_case_number")
+        for appeals_num, group in grouped:
+            records = group.drop(columns="appeals_case_number").to_dict(orient="records")
+            if len(records) == 1:
+                mapping[appeals_num] = records[0]
+            else:
+                mapping[appeals_num] = records
+        
+        with open(self.json_path, 'w', encoding='utf-8') as f:
+            json.dump(mapping, f, ensure_ascii=False, indent=2)
+        
+        total_linked = sum(len(v) if isinstance(v, list) else 1 for v in mapping.values())
+        logger.info(f"Generated JSON mapping with {total_linked} links.")
+
+    def update_timestamp(self):
+        months = ["", "janúar", "febrúar", "mars", "apríl", "maí", "júní",
+                  "júlí", "ágúst", "september", "október", "nóvember", "desember"]
+        dt = datetime.now(ZoneInfo("Atlantic/Reykjavik"))
+        ts_str = f"Síðast uppfært {dt.day}. {months[dt.month]} {dt.year}."
+        Path("last_updated.txt").write_text(ts_str, encoding="utf-8")
+        logger.info(f"Updated timestamp: {ts_str}")
 
 def main():
-    csv_file = Path("allir_domar_og_akvardanir.csv")
-    json_file = Path("mapping.json")
-    cols = [
-        "supreme_case_number",
-        "supreme_case_link",
-        "appeals_case_number",
-        "appeals_case_link",
-        "source_type",
-        "verdict_date",
-        "decision_status",
-    ]
+    scraper = Scraper()
+    manager = DataManager()
 
-    # Load existing data or init empty DF
-    if os.path.exists(csv_file):
-        df_existing = pd.read_csv(csv_file, dtype=str)
-        # Ensure new columns exist in old files
-        for c in cols:
-            if c not in df_existing.columns:
-                df_existing[c] = ""
-        df_existing = df_existing[cols]
-    else:
-        df_existing = pd.DataFrame(columns=cols)
+    all_data = []
 
-    all_rows = []
+    # 1. Scrape Verdicts
+    verdict_links = scraper.get_links("/domar/")
+    logger.info(f"Found {len(verdict_links)} verdict links.")
+    for link in verdict_links:
+        data = scraper.parse_supreme_page(link, "dóm")
+        if data.get("supreme_case_number"): # precise validity check
+            all_data.append(data)
 
-    # -- scrape dómar --
-    verdict_links = get_verdict_links()
-    print(f"Found {len(verdict_links)} dómar")
-    for url in verdict_links:
-        sup_no, link, app_no, app_link, verdict_date, decision_status = scrape_supreme(url, "dóm")
-        all_rows.append((sup_no, link, app_no, app_link, "dóm", verdict_date, decision_status))
+    # 2. Scrape Decisions
+    decision_links = scraper.get_links("/akvardanir/")
+    logger.info(f"Found {len(decision_links)} decision links.")
+    for link in decision_links:
+        data = scraper.parse_supreme_page(link, "ákvörðun")
+        if data.get("supreme_case_number"):
+            all_data.append(data)
 
-    # -- scrape ákvarðanir --
-    decision_links = get_decision_links()
-    print(f"Found {len(decision_links)} ákvarðanir")
-    for url in decision_links:
-        sup_no, link, app_no, app_link, verdict_date, decision_status = scrape_supreme(url, "ákvörðun")
-        all_rows.append((sup_no, link, app_no, app_link, "ákvörðun", verdict_date, decision_status))
-
-    # Build new DataFrame; drop entries without appeals-case
-    df_new = pd.DataFrame(all_rows, columns=cols)
-    df_new = df_new[df_new["appeals_case_number"].str.strip().astype(bool)]
-
-    # Concat, dedupe on supreme_case_number (keep existing first)
-    df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-    df_combined = df_combined.drop_duplicates(subset="supreme_case_number", keep="first")
-
-    # Save combined CSV
-    dir_name = os.path.dirname(csv_file)
-    if dir_name:
-        os.makedirs(dir_name, exist_ok=True)
-    df_combined.to_csv(csv_file, index=False, encoding="utf-8")
-    added = len(df_combined) - len(df_existing)
-    print(f"Done → {csv_file} ({added} new rows, total {len(df_combined)})")
-
-    # 1) Read and strip whitespace on all string columns
-    df = pd.read_csv(csv_file, encoding="utf-8-sig", dtype=str)
-
-    # Ensure the two new columns are present (for safety if other tools touch the CSV)
-    for c in ["verdict_date", "decision_status"]:
-        if c not in df.columns:
-            df[c] = ""
-
-    df.loc[df['appeals_case_link'].isnull(), 'appeals_case_link'] = ''
-    for col in df.select_dtypes(include="object"):
-        df[col] = df[col].fillna("").str.strip()
-
-    # 2) Build the mapping in one go, no groupby.apply
-    mapping = {
-        appeals_num: (
-            group.drop(columns="appeals_case_number").to_dict(orient="records")[0]
-            if len(group) == 1
-            else group.drop(columns="appeals_case_number").to_dict(orient="records")
-        )
-        for appeals_num, group in df.groupby("appeals_case_number")
-    }
-
-    # 3) Write JSON
-    json_file.write_text(
-        json.dumps(mapping, ensure_ascii=False, indent=2),
-        encoding="utf-8"
-    )
-
-    # 4) Print summary
-    total = sum(1 if not isinstance(v, list) else len(v) for v in mapping.values())
-    print(f"Wrote {json_file} with {total:,} verdict links")
-
-    # 5) Write timestamp in Icelandic locale format
-    months = [
-        "", "janúar", "febrúar", "mars", "apríl", "maí", "júní",
-        "júlí", "ágúst", "september", "október", "nóvember", "desember",
-    ]
-    dt = datetime.now(ZoneInfo("Atlantic/Reykjavik"))
-    ts_str = f"Síðast uppfært {dt.day}. {months[dt.month]} {dt.year}."
-    Path("last_updated.txt").write_text(ts_str, encoding="utf-8")
-    print(f"Wrote last_updated.txt: {ts_str}")
+    # 3. Save
+    manager.save_csv(all_data)
+    manager.generate_json_mapping()
+    manager.update_timestamp()
 
 if __name__ == "__main__":
     main()
