@@ -2,6 +2,8 @@
 
 Static lookup app that connects Landsréttur (Iceland’s appeals court) case numbers to the matching Hæstiréttur (Supreme Court) verdicts and administrative decisions. Visitors type a Landsréttur case such as `37/2022` and immediately see every related Supreme Court document, with direct links to the original pages.
 
+The site supports **Deep Linking**: sharing a URL like `.../?case=731/2022` automatically performs a lookup for that case. The URL also updates dynamically as you search.
+
 ## Repository Layout
 - `index.html`, `app.js` – The entire frontend. A plain HTML form that fetches `mapping.json`, shows loading/error states, and renders the verdict list client-side.
 - `mapping.json` – Lookup table keyed by Landsréttur case number. Values are either a single verdict object or an array when multiple Supreme Court results exist.
