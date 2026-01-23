@@ -8735,6 +8735,14 @@
     "verdict_date": "19. desember 2025",
     "decision_status": "Samþykkt"
   },
+  "608/2024": {
+    "supreme_case_number": "2025-156",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=75efa636-cd1f-4b54-9e20-72d566d0519b",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=7abf3fa6-91aa-4699-b1d2-d0191fdba1fd&amp;verdictid=a12cc62f-d29c-4db7-930c-2fc9b6d4d4ef",
+    "source_type": "ákvörðun",
+    "verdict_date": "21. janúar 2026",
+    "decision_status": "Hafnað"
+  },
   "609/2019": {
     "supreme_case_number": "2021-61",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4cfd4f8a-fabf-46ab-9d59-c57e72c452c3",
@@ -10815,6 +10823,24 @@
     "verdict_date": "6. mars 2025",
     "decision_status": "Hafnað"
   },
+  "772/2024": [
+    {
+      "supreme_case_number": "2025-158",
+      "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=825c6201-55bf-4ea1-8326-628ebcc7f576",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=a9674799-3b8b-4f79-8131-807c5ff2190e&amp;verdictid=1ff29f0b-aa4c-4c44-b2d5-288f007e5ad4",
+      "source_type": "ákvörðun",
+      "verdict_date": "21. janúar 2026",
+      "decision_status": "Hafnað"
+    },
+    {
+      "supreme_case_number": "2025-166",
+      "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=ad09d834-2577-40b6-8e25-a9279db44847",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=a9674799-3b8b-4f79-8131-807c5ff2190e&amp;verdictid=1ff29f0b-aa4c-4c44-b2d5-288f007e5ad4",
+      "source_type": "ákvörðun",
+      "verdict_date": "21. janúar 2026",
+      "decision_status": "Hafnað"
+    }
+  ],
   "773/2021": {
     "supreme_case_number": "2023-11",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=b2e81e80-6f0d-4622-a9b1-84140f11af5a",
