@@ -168,7 +168,7 @@ function performLookup(key) {
   // Always include this paragraph
   const firstAppealHtml = `
     <div class="intro-text">
-       Landsréttarmál ${keyHtml} hefur verið til umfjöllunar í Hæstarétti:
+       Landsréttarmál nr. ${keyHtml} hefur verið til umfjöllunar í Hæstarétti:
     </div>
   `;
 
