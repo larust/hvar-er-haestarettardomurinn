@@ -7595,6 +7595,14 @@
     "verdict_date": "28. febrúar 2019",
     "decision_status": "Hafnað"
   },
+  "541/2024": {
+    "supreme_case_number": "70/2025",
+    "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=2f84bfc6-630d-4705-8ec9-4821dc3bf76a",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=ed87e655-a80d-4c5c-a2ec-30c4263cdb59&amp;verdictid=9c3c9ec4-afd1-4272-9659-91e4bfd47a7b",
+    "source_type": "dóm",
+    "verdict_date": "28. janúar 2026",
+    "decision_status": ""
+  },
   "544/2019": {
     "supreme_case_number": "2020-178",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=c37d5b7a-be88-4ed8-b99c-856fca46686b",
@@ -9715,6 +9723,24 @@
     "verdict_date": "20. mars 2025",
     "decision_status": "Hafnað"
   },
+  "681/2025": [
+    {
+      "supreme_case_number": "61/2025",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=d7ae089a-d28e-41b2-87bf-0ff1b3da7dd0",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=61f6c265-0c1b-45f2-9ffc-bd472cc1ce3a&amp;verdictid=1cb67777-bf1d-47e7-8d1a-edefe67ce19b",
+      "source_type": "dóm",
+      "verdict_date": "26. janúar 2026",
+      "decision_status": ""
+    },
+    {
+      "supreme_case_number": "2025-181",
+      "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=4dab5e48-1648-45b2-8910-76f3d440897d",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=61f6c265-0c1b-45f2-9ffc-bd472cc1ce3a&amp;verdictid=1cb67777-bf1d-47e7-8d1a-edefe67ce19b",
+      "source_type": "ákvörðun",
+      "verdict_date": "26. janúar 2026",
+      "decision_status": "Hafnað"
+    }
+  ],
   "683/2023": {
     "supreme_case_number": "2023-150",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=c6d8a71d-6ed7-4213-8e5e-0a1b9c7ed8fb",
