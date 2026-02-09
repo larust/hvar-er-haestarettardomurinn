@@ -9003,6 +9003,14 @@
     "verdict_date": "15. desember 2020",
     "decision_status": "Hafnað"
   },
+  "63/2025": {
+    "supreme_case_number": "2026-3",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=0b794ad9-31c8-4792-92c1-140199ae2181",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=4faece32-7b63-43b3-9f8e-0fb9eecd7f2b&amp;verdictid=e4d3ce72-9faf-48b4-81e9-7715dbae954f",
+    "source_type": "ákvörðun",
+    "verdict_date": "5. febrúar 2026",
+    "decision_status": "Samþykkt"
+  },
   "630/2020": [
     {
       "supreme_case_number": "2022-37",
@@ -10790,6 +10798,14 @@
     "source_type": "ákvörðun",
     "verdict_date": "15. janúar 2020",
     "decision_status": "Hafnað"
+  },
+  "761/2025": {
+    "supreme_case_number": "1/2026",
+    "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=e1b95460-5e1c-4d29-b867-90519ca3d9dc",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=38b8e552-f23d-4429-aba0-31282f496b95&amp;verdictid=9bd8a916-101b-4577-b671-806ca3bd3f7e",
+    "source_type": "dóm",
+    "verdict_date": "5. febrúar 2026",
+    "decision_status": ""
   },
   "763/2018": [
     {
