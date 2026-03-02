@@ -9387,6 +9387,14 @@
       "decision_status": ""
     }
   ],
+  "656/2024": {
+    "supreme_case_number": "2025-172",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=22464ba7-3dd9-46c7-9c67-f7b598848c9c",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=9ad92ca0-aa5d-4d3e-9fc8-8b04ae13e156&amp;verdictid=0394ab39-fa7c-44db-84ed-17105ff5c599",
+    "source_type": "ákvörðun",
+    "verdict_date": "23. febrúar 2026",
+    "decision_status": "Samþykkt"
+  },
   "657/2021": [
     {
       "supreme_case_number": "2023-38",
@@ -11635,14 +11643,24 @@
     "verdict_date": "23. apríl 2024",
     "decision_status": "Hafnað"
   },
-  "830/2024": {
-    "supreme_case_number": "56/2025",
-    "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=53e291e6-29b6-463c-819d-e9b413ea9bb7",
-    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=8bd2e3e9-6f16-4a85-a150-ac5aecfa1f47&amp;verdictid=617b0bc1-7439-489e-a13f-e4ad33ee930f",
-    "source_type": "dóm",
-    "verdict_date": "27. október 2025",
-    "decision_status": ""
-  },
+  "830/2024": [
+    {
+      "supreme_case_number": "56/2025",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=53e291e6-29b6-463c-819d-e9b413ea9bb7",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=8bd2e3e9-6f16-4a85-a150-ac5aecfa1f47&amp;verdictid=617b0bc1-7439-489e-a13f-e4ad33ee930f",
+      "source_type": "dóm",
+      "verdict_date": "27. október 2025",
+      "decision_status": ""
+    },
+    {
+      "supreme_case_number": "2026-14",
+      "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=862a3bfb-46f9-4b11-922a-d25f96ac652f",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=8bd2e3e9-6f16-4a85-a150-ac5aecfa1f47&amp;verdictid=316ee96a-b26b-45ad-9e76-97474f2e7d05",
+      "source_type": "ákvörðun",
+      "verdict_date": "26. febrúar 2026",
+      "decision_status": "Hafnað"
+    }
+  ],
   "831/2018": {
     "supreme_case_number": "2018-267",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=a4ac452c-2148-480e-adc3-e03545129f4a",
