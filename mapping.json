@@ -4209,6 +4209,14 @@
       "decision_status": ""
     }
   ],
+  "341/2025": {
+    "supreme_case_number": "7/2026",
+    "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=1c474831-866b-4fa0-92c8-e6b431791211",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=61c18346-0c96-47ad-b67f-78cef7ba6b88&amp;verdictid=07d2bd1a-154d-4e7b-b5ae-ddc49f227cb4",
+    "source_type": "dóm",
+    "verdict_date": "19. mars 2026",
+    "decision_status": ""
+  },
   "342/2018": {
     "supreme_case_number": "2019-7",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=4175b14d-0141-42d8-876d-8c5ce3d420f5",
@@ -11765,6 +11773,14 @@
     "verdict_date": "11. júní 2024",
     "decision_status": "Hafnað"
   },
+  "837/2025": {
+    "supreme_case_number": "2026-15",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=65dfb871-01a8-405d-ba34-19a127433d95",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=e9c3f9a3-b7fb-472a-8a33-1afc8e6b5eb6&amp;verdictid=4b7948eb-82d6-4f73-adb1-d1432d684b99",
+    "source_type": "ákvörðun",
+    "verdict_date": "17. mars 2026",
+    "decision_status": "Samþykkt"
+  },
   "838/2018": {
     "supreme_case_number": "2019-290",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=7e1cabc6-3a68-4def-b9a0-d948449bbf8e",
@@ -11889,6 +11905,14 @@
     "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=07626bde-8556-4432-8101-f571b2a94d7f&verdictid=567b8194-7d70-46e0-87cb-6f667d5d57cd",
     "source_type": "ákvörðun",
     "verdict_date": "20. mars 2025",
+    "decision_status": "Hafnað"
+  },
+  "847/2024": {
+    "supreme_case_number": "2026-6",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=1c529a8d-cc86-4257-8f6e-6e3262733462",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=3c2df679-96e5-4c91-b948-5199294d9881&amp;verdictid=ab19807f-947c-488c-9869-8d66db8521b5",
+    "source_type": "ákvörðun",
+    "verdict_date": "17. mars 2026",
     "decision_status": "Hafnað"
   },
   "848/2023": [
