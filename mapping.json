@@ -89,6 +89,14 @@
     "verdict_date": "25. maí 2021",
     "decision_status": "Hafnað"
   },
+  "1025/2024": {
+    "supreme_case_number": "2026-21",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=cedf78fe-3ba1-48bc-b26c-f6976490d812",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=f45105e7-3f86-4659-b4a1-09aad26c7129&amp;verdictid=fc8fc10b-1589-4142-88d0-b4f180dc9a98",
+    "source_type": "ákvörðun",
+    "verdict_date": "9. apríl 2026",
+    "decision_status": "Samþykkt"
+  },
   "105/2018": {
     "supreme_case_number": "2018-214",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=3dcb7cd0-5a79-4310-9d6b-410f74f34ea3",
@@ -1569,6 +1577,14 @@
       "decision_status": ""
     }
   ],
+  "20/2025": {
+    "supreme_case_number": "2026-23",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=8e037163-4011-4f09-990a-e76ec0607eff",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=edca473d-b05f-4b87-ac23-388cc0fc2a60&amp;verdictid=4f409815-8a5e-4e80-a831-99834b6243d5",
+    "source_type": "ákvörðun",
+    "verdict_date": "9. apríl 2026",
+    "decision_status": "Hafnað"
+  },
   "200/2025": [
     {
       "supreme_case_number": "2025-141",
@@ -3889,6 +3905,14 @@
     "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=0e8b3f06-5e2c-45a9-b6f5-d993e964089b&verdictid=fcc81722-c55a-47ce-8492-7d72c8caa216",
     "source_type": "ákvörðun",
     "verdict_date": "27. janúar 2020",
+    "decision_status": "Hafnað"
+  },
+  "33/2025": {
+    "supreme_case_number": "2026-26",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=aa15175c-7b6e-4494-9319-03ffb4c197cb",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=8d4e9156-3eca-49ea-80de-132c3bbe7527&amp;verdictid=080f0e95-da16-42d8-adc5-9a154f53efd3",
+    "source_type": "ákvörðun",
+    "verdict_date": "9. apríl 2026",
     "decision_status": "Hafnað"
   },
   "330/2019": {
