@@ -1499,14 +1499,24 @@
       "decision_status": ""
     }
   ],
-  "197/2024": {
-    "supreme_case_number": "2025-78",
-    "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=409d998d-5437-40e3-a7a7-f6b1905d638f",
-    "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=1242ec3f-a47b-473a-885b-00a6638c00d5&verdictid=f2f5bec5-efb3-458c-9339-6d2969eecda0",
-    "source_type": "ákvörðun",
-    "verdict_date": "24. júní 2025",
-    "decision_status": "Samþykkt"
-  },
+  "197/2024": [
+    {
+      "supreme_case_number": "2025-78",
+      "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=409d998d-5437-40e3-a7a7-f6b1905d638f",
+      "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=1242ec3f-a47b-473a-885b-00a6638c00d5&verdictid=f2f5bec5-efb3-458c-9339-6d2969eecda0",
+      "source_type": "ákvörðun",
+      "verdict_date": "24. júní 2025",
+      "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "37/2025",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=2872e8c7-3685-400f-812b-aa2416bb0cd6",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=1242ec3f-a47b-473a-885b-00a6638c00d5&amp;verdictid=f2f5bec5-efb3-458c-9339-6d2969eecda0",
+      "source_type": "dóm",
+      "verdict_date": "15. apríl 2026",
+      "decision_status": ""
+    }
+  ],
   "198/2020": [
     {
       "supreme_case_number": "2021-187",
@@ -7837,6 +7847,14 @@
     "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=1f819295-3ce0-41ba-8d45-273fc9df9cec&verdictid=d18887d8-0618-45f9-9a6e-71b088ecabea",
     "source_type": "ákvörðun",
     "verdict_date": "24. febrúar 2023",
+    "decision_status": "Hafnað"
+  },
+  "546/2025": {
+    "supreme_case_number": "2026-30",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=3c5fbc67-501a-48b5-9cb7-881486491a23",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=fa79c7a2-0b17-4b29-889d-1ad59c5a0411&amp;verdictid=67883c84-f18c-4bb0-b5f3-ac2c8fee37ed",
+    "source_type": "ákvörðun",
+    "verdict_date": "13. apríl 2026",
     "decision_status": "Hafnað"
   },
   "547/2020": {
