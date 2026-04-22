@@ -12373,6 +12373,14 @@
       "decision_status": ""
     }
   ],
+  "900/2025": {
+    "supreme_case_number": "2026-34",
+    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=fc609c59-8035-48e7-b833-82ea70c9b4ef",
+    "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?Id=40cc25e1-3b9c-4304-853b-5caeeae9ae7e&amp;verdictid=358624c3-c81c-4bec-85cc-af0fd4f9d4bd",
+    "source_type": "ákvörðun",
+    "verdict_date": "20. apríl 2026",
+    "decision_status": "Samþykkt"
+  },
   "904/2023": {
     "supreme_case_number": "2025-80",
     "supreme_case_link": "https://www.haestirettur.is/default.aspx?pageid=af3ab071-b30f-11eb-9b98-005056bc703c&id=01f5cf90-63f6-4179-9781-3082ca1f0db4",
@@ -12699,14 +12707,24 @@
     "verdict_date": "24. ágúst 2023",
     "decision_status": "Hafnað"
   },
-  "98/2024": {
-    "supreme_case_number": "2025-94",
-    "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=39eefec9-695e-4f03-ba8e-7954ea7cfdac",
-    "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=a919ae10-67c2-4d39-9bea-b28cef8c340b&verdictid=d2f96485-aa1c-4dd0-9b6a-5d8ecacd9bee",
-    "source_type": "ákvörðun",
-    "verdict_date": "26. júní 2025",
-    "decision_status": "Samþykkt"
-  },
+  "98/2024": [
+    {
+      "supreme_case_number": "2025-94",
+      "supreme_case_link": "https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=39eefec9-695e-4f03-ba8e-7954ea7cfdac",
+      "appeals_case_link": "https://www.landsrettur.is/?PageId=347c3bb1-8926-11e5-80c6-005056bc6a40&Id=a919ae10-67c2-4d39-9bea-b28cef8c340b&verdictid=d2f96485-aa1c-4dd0-9b6a-5d8ecacd9bee",
+      "source_type": "ákvörðun",
+      "verdict_date": "26. júní 2025",
+      "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "39/2025",
+      "supreme_case_link": "https://www.haestirettur.is/domar/_domur/?id=4d02be09-cee6-4679-ba53-476d3184ed53",
+      "appeals_case_link": "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=a919ae10-67c2-4d39-9bea-b28cef8c340b&amp;verdictid=d2f96485-aa1c-4dd0-9b6a-5d8ecacd9bee",
+      "source_type": "dóm",
+      "verdict_date": "22. apríl 2026",
+      "decision_status": ""
+    }
+  ],
   "988/2024": [
     {
       "supreme_case_number": "2025-25",
