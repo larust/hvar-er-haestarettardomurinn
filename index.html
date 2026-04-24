@@ -31,13 +31,15 @@
     <form id="lookupForm">
       <div class="input-group">
         <label for="appealInput">Landsréttarmálið nr.:</label>
-        <input id="appealInput" type="text" pattern="[0-9]{1,4}/[0-9]{4}" placeholder="t.d. 731/2022" required
-          autocomplete="off" autofocus>
+        <input id="appealInput" type="text"
+          pattern="(?:[Ll]andsréttarmál(?:ið)?\s*nr\.?\s*|[Mm][áa]l\s*nr\.?\s*)?[0-9]{1,4}\s*(?:/|-)\s*[0-9]{4}"
+          title="Sláðu inn málsnúmer Landsréttar, t.d. 731/2022 eða Mál nr. 731/2022"
+          inputmode="numeric" placeholder="t.d. 731/2022" required autocomplete="off" autofocus>
       </div>
       <button type="submit">Leita</button>
     </form>
 
-    <div id="result"></div>
+    <div id="result" aria-live="polite" aria-atomic="true"></div>
   </div>
 
   <script src="app.js"></script>
