@@ -114,6 +114,13 @@ After a live run, inspect diffs for:
 - `last_updated.txt` timestamp changes.
 - `scrape_report.json` counts and any skipped/unlinked cases.
 
+Frontend smoke checks:
+
+- Exact lookup and normalized lookup, for example `564/2019` and `Mál nr. 564 / 2019`.
+- Multi-result cases sort chronologically.
+- Result rows show compact type/status chips without wrapping awkwardly on mobile widths.
+- No-match searches clearly distinguish no Supreme Court result from suggested nearby Landsréttur cases.
+
 ## Common Failure Points
 
 - Ísland.is detail headings may omit whitespace after `Mál nr.`.

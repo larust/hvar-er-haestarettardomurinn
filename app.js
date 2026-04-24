@@ -9,6 +9,20 @@ let loadFailed = false;
 
 const MAX_SUGGESTIONS = 3;
 const MAX_SUGGESTION_DISTANCE = 3;
+const ICELANDIC_MONTHS = {
+  janúar: 0,
+  febrúar: 1,
+  mars: 2,
+  apríl: 3,
+  maí: 4,
+  júní: 5,
+  júlí: 6,
+  ágúst: 7,
+  september: 8,
+  október: 9,
+  nóvember: 10,
+  desember: 11,
+};
 
 const form = document.getElementById('lookupForm');
 const input = document.getElementById('appealInput');
@@ -184,18 +198,18 @@ function performLookup(rawKey) {
 
 function renderNoMatch(key, suggestions) {
   const error = createElement('div', 'error');
-  error.append('Mál nr. ');
-  error.append(createElement('strong', '', key), ' fannst ekki.');
+  error.append('Ekkert mál hjá Hæstarétti fannst fyrir ');
+  error.append(createElement('strong', '', key), '.');
 
   if (!suggestions.length) {
     replaceResult(error);
     return;
   }
 
-  const hint = createElement('span', 'suggestion-hint', 'Getur verið að þú hafir verið að leita að:');
+  const hint = createElement('span', 'suggestion-hint', 'Svipuð Landsréttarmál:');
   error.append(document.createElement('br'), hint);
 
-  const list = document.createElement('ul');
+  const list = createElement('ul', 'suggestion-list');
   suggestions.forEach(suggestion => {
     const item = document.createElement('li');
     const button = createElement('button', 'suggestion-button', suggestion);
@@ -209,9 +223,12 @@ function renderNoMatch(key, suggestions) {
 }
 
 function renderMatches(key, rows) {
+  const sortedRows = sortResultRows(rows);
   const firstAppealItem = rows.find(item => toText(item.appeals_case_link).trim() !== '');
   const firstAppealUrl = firstAppealItem ? getSafeHttpUrl(firstAppealItem.appeals_case_link) : '';
 
+  const summary = createElement('div', 'result-summary');
+  const summaryText = createElement('div', 'result-summary-text');
   const intro = createElement('div', 'intro-text');
   intro.append('Landsréttarmál nr. ');
 
@@ -228,22 +245,28 @@ function renderMatches(key, rows) {
   }
 
   intro.append(' hefur verið til umfjöllunar í Hæstarétti:');
+  summaryText.append(intro);
+  summary.append(summaryText);
 
-  const list = document.createElement('ul');
-  rows.forEach(row => {
+  const list = createElement('ul', 'result-list');
+  sortedRows.forEach(row => {
     list.append(createVerdictItem(row));
   });
 
-  replaceResult(intro, list);
+  replaceResult(summary, list);
+  input.focus();
 }
 
 function createVerdictItem(row) {
-  const item = document.createElement('li');
-  const header = createElement('div', 'verdict-header');
+  const item = createElement('li', 'result-item');
+  const header = createElement('div', 'result-main');
+  const typeChip = createElement('span', 'case-chip', getSourceTypeLabel(row.source_type));
   const sourceType = toText(row.source_type) || 'mál';
   const supremeCaseNumber = toText(row.supreme_case_number);
-  const linkText = `Skoða ${sourceType} í máli nr. ${supremeCaseNumber}`;
+  const linkText = `Mál nr. ${supremeCaseNumber}`;
   const supremeUrl = getSafeHttpUrl(row.supreme_case_link);
+
+  header.append(typeChip);
 
   if (supremeUrl) {
     const link = createElement('a', '', linkText);
@@ -252,7 +275,7 @@ function createVerdictItem(row) {
     link.rel = 'noopener';
     header.append(link);
   } else {
-    header.textContent = linkText;
+    header.append(createElement('span', 'result-link-fallback', linkText));
   }
 
   const meta = createElement('div', 'verdict-meta');
@@ -262,7 +285,6 @@ function createVerdictItem(row) {
   if (verdictDate) meta.append(verdictDate);
 
   if (sourceType.includes('ákvörðun') && decisionStatus) {
-    if (verdictDate) meta.append(' - ');
     const statusClass = getDecisionStatusClass(decisionStatus);
     meta.append(createElement('span', statusClass, decisionStatus));
   }
@@ -272,9 +294,41 @@ function createVerdictItem(row) {
 }
 
 function getDecisionStatusClass(status) {
-  if (status.includes('Samþykkt')) return 'status-approved';
-  if (status.includes('Hafnað')) return 'status-rejected';
-  return 'status-muted';
+  if (status.includes('Samþykkt')) return 'status-chip status-chip-approved';
+  if (status.includes('Hafnað')) return 'status-chip status-chip-rejected';
+  return 'status-chip status-muted';
+}
+
+function getSourceTypeLabel(sourceType) {
+  return toText(sourceType).includes('ákvörðun') ? 'Ákvörðun' : 'Dómur';
+}
+
+function parseIcelandicDate(value) {
+  const match = toText(value).trim().match(/^(\d{1,2})\.\s+([a-záðéíóúýþæö]+)\s+(\d{4})$/i);
+  if (!match) return null;
+
+  const day = Number(match[1]);
+  const month = ICELANDIC_MONTHS[match[2].toLocaleLowerCase('is-IS')];
+  const year = Number(match[3]);
+  if (!Number.isInteger(day) || month == null || !Number.isInteger(year)) return null;
+
+  return new Date(year, month, day).getTime();
+}
+
+function sortResultRows(rows) {
+  return rows
+    .map((row, index) => ({
+      row,
+      index,
+      parsedDate: parseIcelandicDate(row.verdict_date),
+    }))
+    .sort((a, b) => {
+      if (a.parsedDate != null && b.parsedDate != null) return a.parsedDate - b.parsedDate;
+      if (a.parsedDate != null) return -1;
+      if (b.parsedDate != null) return 1;
+      return a.index - b.index;
+    })
+    .map(item => item.row);
 }
 
 // ---------- 3. Helper ---------------------------------------------------

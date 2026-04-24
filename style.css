@@ -234,9 +234,27 @@ li a:hover {
   margin-top: 0.5em;
 }
 
+.suggestion-list {
+  gap: 0.625rem;
+}
+
+.suggestion-list li {
+  align-items: flex-start;
+  padding: 0.75rem 0.875rem;
+}
+
+.result-summary {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.result-summary-text {
+  min-width: 0;
+}
+
 .intro-text {
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .intro-text a,
@@ -250,7 +268,50 @@ li a:hover {
   color: var(--color-accent-hover);
 }
 
+.result-list {
+  gap: 0.75rem;
+}
+
+.result-item {
+  gap: 0.625rem;
+}
+
+.result-main {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+.result-link-fallback {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.case-chip,
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  padding: 0.16rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.case-chip {
+  color: var(--color-text-muted);
+  background: var(--color-card-bg);
+}
+
 .verdict-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   font-size: 0.875rem;
   color: var(--color-text-muted);
 }
@@ -268,3 +329,16 @@ li a:hover {
 .status-muted {
   opacity: 0.8;
 }
+
+.status-chip-approved {
+  color: var(--color-success);
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.status-chip-rejected {
+  color: var(--color-error);
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.08);
+}
+
