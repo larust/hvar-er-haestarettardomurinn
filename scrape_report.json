@@ -1,0 +1,50 @@
+{
+  "started_at": "2026-04-24T21:43:09+00:00",
+  "completed_at": "2026-04-24T21:43:11+00:00",
+  "mode": "incremental",
+  "max_pages": 1,
+  "source_urls": {
+    "verdicts": "https://island.is/domar?court=H%C3%A6stir%C3%A9ttur",
+    "decisions": "https://island.is/s/haestirettur/akvardanir"
+  },
+  "sources": {
+    "verdicts": {
+      "listing_pages_fetched": 1,
+      "listing_pages_failed": 0,
+      "listing_pages_empty": 0,
+      "listing_items_discovered": 10,
+      "known_items_skipped": 10,
+      "detail_pages_attempted": 0,
+      "detail_pages_with_case_number": 0,
+      "detail_pages_without_case_number": 0,
+      "linked_rows": 0,
+      "unlinked_rows": 0
+    },
+    "decisions": {
+      "listing_pages_fetched": 1,
+      "listing_pages_failed": 0,
+      "listing_pages_empty": 0,
+      "listing_items_discovered": 10,
+      "known_items_skipped": 10,
+      "detail_pages_attempted": 0,
+      "detail_pages_with_case_number": 0,
+      "detail_pages_without_case_number": 0,
+      "linked_rows": 0,
+      "unlinked_rows": 0
+    }
+  },
+  "skipped_cases": [],
+  "source_failures": [],
+  "csv_rows_added": 0,
+  "mapping_links_generated": 1521,
+  "artifacts_refreshed": true,
+  "failed": false,
+  "failure_reason": "",
+  "totals": {
+    "listing_pages_fetched": 2,
+    "listing_items_discovered": 20,
+    "detail_pages_attempted": 0,
+    "valid_supreme_cases": 0,
+    "linked_rows": 0
+  }
+}
