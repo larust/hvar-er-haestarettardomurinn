@@ -210,6 +210,7 @@ li a:hover {
 }
 
 .suggestion-button {
+  width: auto;
   background: none;
   border: none;
   color: var(--color-accent);
@@ -218,6 +219,19 @@ li a:hover {
   font: inherit;
   padding: 0;
   margin: 0 0.2rem;
+  box-shadow: none;
+  display: inline;
+}
+
+.suggestion-button:hover {
+  background: none;
+  transform: none;
+}
+
+.suggestion-hint {
+  display: block;
+  font-size: 0.9em;
+  margin-top: 0.5em;
 }
 
 .intro-text {
@@ -249,4 +263,8 @@ li a:hover {
 .status-rejected {
   color: var(--color-error);
   font-weight: 700;
+}
+
+.status-muted {
+  opacity: 0.8;
 }

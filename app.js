@@ -1,13 +1,14 @@
 /*  ------------------------------------------------------------------
-    Loads mapping.json, handles look-up, supports 1-to-many results.
+    Loads mapping.json, handles lookup, supports 1-to-many results.
     ------------------------------------------------------------------ */
 
+let mapping = {};
+let mappingKeys = [];
+let mappingLoaded = false;
+let loadFailed = false;
 
-let mapping = {};                           // filled on load
-let mappingLoaded = false;                  // flipped once data arrives
-let loadFailed = false;                     // prevents submitting on fatal error
-const MAX_SUGGESTIONS = 3;                  // how many near matches to show
-const MAX_SUGGESTION_DISTANCE = 3;          // skip if best match is farther away
+const MAX_SUGGESTIONS = 3;
+const MAX_SUGGESTION_DISTANCE = 3;
 
 const form = document.getElementById('lookupForm');
 const input = document.getElementById('appealInput');
@@ -19,15 +20,68 @@ const defaultBtnLabel = submitBtn ? submitBtn.textContent : '';
 function setLoading(isLoading) {
   if (!submitBtn) return;
   submitBtn.disabled = isLoading;
-  submitBtn.textContent = isLoading ? 'Hleður…' : defaultBtnLabel;
+  submitBtn.textContent = isLoading ? 'Hleður...' : defaultBtnLabel;
 }
 
 function setInputEnabled(enabled) {
   input.disabled = !enabled;
 }
 
-function showStatus(msg) {
-  result.innerHTML = `<div class="status">${msg}</div>`;
+function createElement(tagName, className = '', text = '') {
+  const element = document.createElement(tagName);
+  if (className) element.className = className;
+  if (text) element.textContent = text;
+  return element;
+}
+
+function replaceResult(...nodes) {
+  result.replaceChildren(...nodes);
+}
+
+function showStatus(message) {
+  replaceResult(createElement('div', 'status', message));
+}
+
+function showError(message) {
+  replaceResult(createElement('div', 'error', message));
+}
+
+function toText(value) {
+  return value == null ? '' : String(value);
+}
+
+function getSafeHttpUrl(value) {
+  const raw = toText(value).trim();
+  if (!raw) return '';
+
+  try {
+    const url = new URL(raw, window.location.href);
+    if (url.protocol === 'http:' || url.protocol === 'https:') {
+      return url.href;
+    }
+  } catch (err) {
+    return '';
+  }
+
+  return '';
+}
+
+function normalizeCaseInput(value) {
+  const raw = toText(value).trim();
+  if (!raw) return '';
+
+  const compact = raw
+    .replace(/^(?:landsréttarmál(?:ið)?|m[áa]l)\s*nr\.?\s*/i, '')
+    .replace(/\s+/g, '')
+    .replace(/[–—]/g, '-');
+
+  const slashMatch = compact.match(/^(\d{1,4})\/(\d{4})$/);
+  if (slashMatch) return `${slashMatch[1]}/${slashMatch[2]}`;
+
+  const hyphenMatch = compact.match(/^(\d{1,4})-(\d{4})$/);
+  if (hyphenMatch) return `${hyphenMatch[1]}/${hyphenMatch[2]}`;
+
+  return '';
 }
 
 setLoading(true);
@@ -36,32 +90,30 @@ showStatus('Sæki gögn...');
 
 // ---------- 1. Fetch mapping.json --------------------------------------
 fetch('mapping.json')
-  .then(r => r.json())
+  .then(response => response.json())
   .then(data => {
     mapping = data || {};
+    mappingKeys = Object.keys(mapping);
     mappingLoaded = true;
     setLoading(false);
     setInputEnabled(true);
 
-    // Pick a random case for the placeholder
-    const keys = Object.keys(mapping);
-    if (keys.length > 0) {
-      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    if (mappingKeys.length > 0) {
+      const randomKey = mappingKeys[Math.floor(Math.random() * mappingKeys.length)];
       input.placeholder = `t.d. ${randomKey}`;
     }
 
-    if (Object.keys(mapping).length === 0) {
+    if (mappingKeys.length === 0) {
       showStatus('Engin gögn fundust.');
-    } else {
-      result.innerHTML = '';
+      return;
+    }
 
-      // Check for deep link
-      const params = new URLSearchParams(window.location.search);
-      const caseParam = params.get('case');
-      if (caseParam) {
-        input.value = caseParam;
-        performLookup(caseParam);
-      }
+    replaceResult();
+
+    const params = new URLSearchParams(window.location.search);
+    const caseParam = params.get('case');
+    if (caseParam) {
+      performLookup(caseParam);
     }
   })
   .catch(() => {
@@ -69,55 +121,49 @@ fetch('mapping.json')
     setLoading(false);
     setInputEnabled(false);
     if (submitBtn) submitBtn.disabled = true;
-    showError('Tókst ekki að hlaða gögnunum :(');
+    showError('Tókst ekki að hlaða gögnunum.');
   });
 
 // ---------- 1b. Fetch last-updated timestamp ---------------------------
 fetch('last_updated.txt')
-  .then(r => r.text())
-  .then(text => { updatedEl.innerHTML = text; })
+  .then(response => response.text())
+  .then(text => { updatedEl.textContent = text; })
   .catch(() => { updatedEl.textContent = 'Ekki vitað hvenær dómasafnið var síðast uppfært.'; });
 
-// Escape basic HTML entities to avoid injection when inserting user data
-function escapeHtml(str) {
-  return str.replace(/[&<>"']/g, ch => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  }[ch]));
-}
-
 // ---------- 2. Lookup on form submit -----------------------------------
-form.addEventListener('submit', evt => {
-  evt.preventDefault();
-  const key = input.value.trim();
-  performLookup(key);
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  performLookup(input.value);
 });
 
-result.addEventListener('click', evt => {
-  const button = evt.target.closest('.suggestion-button');
+result.addEventListener('click', event => {
+  const target = event.target instanceof Element ? event.target : event.target.parentElement;
+  const button = target ? target.closest('.suggestion-button') : null;
   if (!button) return;
   const suggestedKey = button.dataset.case;
   if (!suggestedKey) return;
-  input.value = suggestedKey;
   performLookup(suggestedKey);
 });
 
-function performLookup(key) {
+function performLookup(rawKey) {
   if (!mappingLoaded) {
     if (loadFailed) {
       showError('Ekki er hægt að leita þar sem gögnin náðust ekki.');
     } else {
-      showStatus('Bíð eftir að gögnin hlaðist…');
+      showStatus('Bíð eftir að gögnin hlaðist...');
     }
     return;
   }
 
-  const safeKey = escapeHtml(key);
+  const key = normalizeCaseInput(rawKey);
+  if (!key) {
+    showError('Sláðu inn málsnúmer Landsréttar á forminu 123/2024.');
+    trackSearch(toText(rawKey), false, 0);
+    return;
+  }
 
-  // Update URL without reloading
+  input.value = key;
+
   const newUrl = `${window.location.pathname}?case=${encodeURIComponent(key)}`;
   window.history.pushState({ path: newUrl }, '', newUrl);
 
@@ -125,93 +171,113 @@ function performLookup(key) {
 
   if (!rows) {
     const suggestions = getSuggestions(key);
-    if (suggestions.length) {
-      const suggestionList = suggestions
-        .map(item => `
-          <li>
-            <button type="button" class="suggestion-button" data-case="${item}">
-              ${escapeHtml(item)}
-            </button>
-          </li>`)
-        .join('');
-      result.innerHTML = `
-        <div class="error">
-          Mál nr. <b>${safeKey}</b> fannst ekki.<br>
-          <span style="font-size: 0.9em; margin-top:0.5em; display:block;">Getur verið að þú hafir verið að leita að:</span>
-        </div>
-        <ul>${suggestionList}</ul>
-      `;
-    } else {
-      showError(`Ekkert mál hjá Hæstarétti fannst fyrir <b>${safeKey}</b>.`);
-    }
+    renderNoMatch(key, suggestions);
     trackSearch(key, false, 0);
     return;
   }
 
-  // Normalise: ensure rows is an array
   if (!Array.isArray(rows)) rows = [rows];
 
-  // Find the first non-empty appeals link
-  const firstAppealItem = rows.find(item =>
-    item.appeals_case_link &&
-    item.appeals_case_link.trim() !== ''
-  );
-  const firstAppealUrl = firstAppealItem
-    ? firstAppealItem.appeals_case_link
-    : '';
-
-  // Build the in-block label: link if we have one, else just bold text
-  const keyHtml = firstAppealUrl
-    ? `<a href="${firstAppealUrl}" target="_blank" rel="noopener"><strong>${safeKey}</strong></a>`
-    : `<strong>${safeKey}</strong>`;
-
-  // Always include this paragraph
-  const firstAppealHtml = `
-    <div class="intro-text">
-       Landsréttarmál nr. ${keyHtml} hefur verið til umfjöllunar í Hæstarétti:
-    </div>
-  `;
-
-  // Compose the result HTML
-  const listItems = rows.map(item => {
-    const datePart = item.verdict_date ? `${item.verdict_date}` : '';
-
-    let decisionPart = '';
-    if (item.source_type.includes('ákvörðun') && item.decision_status) {
-      if (item.decision_status.includes('Samþykkt')) {
-        decisionPart = ` – <span class="status-approved">${item.decision_status}</span>`;
-      } else if (item.decision_status.includes('Hafnað')) {
-        decisionPart = ` – <span class="status-rejected">${item.decision_status}</span>`;
-      } else {
-        decisionPart = ` <span style="opacity:0.8"> – ${item.decision_status}</span>`;
-      }
-    }
-
-    return `
-        <li>
-          <div class="verdict-header">
-             <a href="${item.supreme_case_link}" target="_blank" rel="noopener">
-               Skoða ${item.source_type} í máli nr. ${item.supreme_case_number}
-             </a>
-          </div>
-          <div class="verdict-meta">
-            ${datePart}${decisionPart}
-          </div>
-        </li>`;
-  }).join('');
-
-  result.innerHTML = `
-      ${firstAppealHtml}
-      <ul>${listItems}</ul>`;
-
+  renderMatches(key, rows);
   trackSearch(key, true, rows.length);
 }
 
-// ---------- 3. Helper ---------------------------------------------------
-function showError(msg) {
-  result.innerHTML = `<div class="error">${msg}</div>`;
+function renderNoMatch(key, suggestions) {
+  const error = createElement('div', 'error');
+  error.append('Mál nr. ');
+  error.append(createElement('strong', '', key), ' fannst ekki.');
+
+  if (!suggestions.length) {
+    replaceResult(error);
+    return;
+  }
+
+  const hint = createElement('span', 'suggestion-hint', 'Getur verið að þú hafir verið að leita að:');
+  error.append(document.createElement('br'), hint);
+
+  const list = document.createElement('ul');
+  suggestions.forEach(suggestion => {
+    const item = document.createElement('li');
+    const button = createElement('button', 'suggestion-button', suggestion);
+    button.type = 'button';
+    button.dataset.case = suggestion;
+    item.append(button);
+    list.append(item);
+  });
+
+  replaceResult(error, list);
 }
 
+function renderMatches(key, rows) {
+  const firstAppealItem = rows.find(item => toText(item.appeals_case_link).trim() !== '');
+  const firstAppealUrl = firstAppealItem ? getSafeHttpUrl(firstAppealItem.appeals_case_link) : '';
+
+  const intro = createElement('div', 'intro-text');
+  intro.append('Landsréttarmál nr. ');
+
+  const strong = createElement('strong', '', key);
+  if (firstAppealUrl) {
+    const appealLink = document.createElement('a');
+    appealLink.href = firstAppealUrl;
+    appealLink.target = '_blank';
+    appealLink.rel = 'noopener';
+    appealLink.append(strong);
+    intro.append(appealLink);
+  } else {
+    intro.append(strong);
+  }
+
+  intro.append(' hefur verið til umfjöllunar í Hæstarétti:');
+
+  const list = document.createElement('ul');
+  rows.forEach(row => {
+    list.append(createVerdictItem(row));
+  });
+
+  replaceResult(intro, list);
+}
+
+function createVerdictItem(row) {
+  const item = document.createElement('li');
+  const header = createElement('div', 'verdict-header');
+  const sourceType = toText(row.source_type) || 'mál';
+  const supremeCaseNumber = toText(row.supreme_case_number);
+  const linkText = `Skoða ${sourceType} í máli nr. ${supremeCaseNumber}`;
+  const supremeUrl = getSafeHttpUrl(row.supreme_case_link);
+
+  if (supremeUrl) {
+    const link = createElement('a', '', linkText);
+    link.href = supremeUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    header.append(link);
+  } else {
+    header.textContent = linkText;
+  }
+
+  const meta = createElement('div', 'verdict-meta');
+  const verdictDate = toText(row.verdict_date).trim();
+  const decisionStatus = toText(row.decision_status).trim();
+
+  if (verdictDate) meta.append(verdictDate);
+
+  if (sourceType.includes('ákvörðun') && decisionStatus) {
+    if (verdictDate) meta.append(' - ');
+    const statusClass = getDecisionStatusClass(decisionStatus);
+    meta.append(createElement('span', statusClass, decisionStatus));
+  }
+
+  item.append(header, meta);
+  return item;
+}
+
+function getDecisionStatusClass(status) {
+  if (status.includes('Samþykkt')) return 'status-approved';
+  if (status.includes('Hafnað')) return 'status-rejected';
+  return 'status-muted';
+}
+
+// ---------- 3. Helper ---------------------------------------------------
 function levenshtein(a, b) {
   if (a === b) return 0;
   const lenA = a.length;
@@ -232,9 +298,9 @@ function levenshtein(a, b) {
       const charB = b.charAt(j - 1);
       const cost = charA === charB ? 0 : 1;
       curr[j] = Math.min(
-        curr[j - 1] + 1,        // insertion
-        prev[j] + 1,            // deletion
-        prev[j - 1] + cost,     // substitution
+        curr[j - 1] + 1,
+        prev[j] + 1,
+        prev[j - 1] + cost,
       );
     }
 
@@ -254,14 +320,13 @@ function weightedDistance(inputCase, inputYear, candidate) {
 }
 
 function getSuggestions(term) {
-  if (!term || !mapping || !Object.keys(mapping).length) return [];
+  if (!term || !mappingKeys.length) return [];
   const [inputCase = '', inputYear = ''] = term.split('/');
-  const keys = Object.keys(mapping);
   const sameCase = inputCase
-    ? keys.filter(key => key.split('/')[0] === inputCase)
+    ? mappingKeys.filter(key => key.split('/')[0] === inputCase)
     : [];
   const sameYear = inputYear
-    ? keys.filter(key => key.endsWith(`/${inputYear}`))
+    ? mappingKeys.filter(key => key.endsWith(`/${inputYear}`))
     : [];
 
   const candidateSet = new Set();
@@ -269,14 +334,12 @@ function getSuggestions(term) {
   sameYear.forEach(key => candidateSet.add(key));
 
   if (!candidateSet.size) {
-    keys.forEach(key => candidateSet.add(key));
+    mappingKeys.forEach(key => candidateSet.add(key));
   } else if (candidateSet.size < MAX_SUGGESTIONS) {
-    keys.forEach(key => candidateSet.add(key));
+    mappingKeys.forEach(key => candidateSet.add(key));
   }
 
-  const candidates = Array.from(candidateSet);
-
-  const ranked = candidates
+  const ranked = Array.from(candidateSet)
     .map(key => ({
       key,
       score: weightedDistance(inputCase, inputYear, key),

@@ -1,4 +1,5 @@
 *.xlsx
+scrape_report.json
 
 # Python
 __pycache__/

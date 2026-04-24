@@ -9,9 +9,14 @@ on:
     - cron: '0 22 * * *'  # Run daily at 8:00 UTC (adjust as needed)
   workflow_dispatch:
 
+concurrency:
+  group: scrape-and-test-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -27,12 +32,13 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest tests/test_scraper.py
+          python -m pytest tests
 
   scrape:
     needs: test
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
@@ -51,6 +57,14 @@ jobs:
       - name: Run scraper
         run: |
           python get_new_verdicts.py
+
+      - name: Upload scrape report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scrape-report
+          path: scrape_report.json
+          if-no-files-found: warn
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
