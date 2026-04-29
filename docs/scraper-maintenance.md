@@ -9,8 +9,8 @@ This guide is for future scraper changes in `hvar-er-haestarettardomurinn`. The 
 1. Load existing `allir_domar_og_akvardanir.csv` and build a set of known `supreme_case_number` values.
 2. Discover Hæstiréttur verdict detail links from Ísland.is GraphQL `webVerdicts` pagination.
 3. Discover Hæstiréttur decision detail links from the HTML decisions listing pages.
-4. For each queued detail page, parse Supreme metadata and find the trusted Landsréttur backlink.
-5. Fetch the Landsréttur backlink and extract the first reasonable `sequence/year` case number from 2018 or later.
+4. For each queued detail page, parse Supreme metadata and find the trusted Landsréttur/lower-court source link.
+5. Fetch that source link and extract the first reasonable `sequence/year` case number from 2018 or later.
 6. Append only linked rows to the CSV and deduplicate by `supreme_case_number`, keeping existing rows.
 7. Check the scrape health report for suspicious source/parser breakage before refreshing generated lookup artifacts.
 8. Regenerate `mapping.json` from the CSV, update `last_updated.txt`, and write `scrape_report.json` for diagnostics.
@@ -37,9 +37,11 @@ The server-rendered page only exposes the first page, so pagination should use G
 - Case number shape: `2026-27`
 - Status comes from keywords/body text, usually `Samþykkt` or `Hafnað`.
 
-### Landsréttur
+### Landsréttur / Lower Court Source
 
-Detail pages usually link to Landsréttur as an “Úrlausn Landsréttar / Héraðsdóms” URL. The scraper only trusts `landsrettur.is` and `www.landsrettur.is` domains, then extracts the first `sequence/year` match with year `>= 2018`.
+Detail pages usually link to the related lower-court decision as an “Úrlausn Landsréttar / Héraðsdóms” URL. Older rows often point directly to `landsrettur.is`; newer Ísland.is verdict pages can point to `/domar/g-<uuid>` on `island.is`. The scraper trusts both `landsrettur.is`/`www.landsrettur.is` and Ísland.is lower-court detail paths, then extracts the first `sequence/year` match with year `>= 2018`.
+
+Some decision pages still expose old `landsrettur.is` backlinks that redirect poorly after the Ísland.is migration. When that direct fetch fails, the scraper can recover decision links by extracting the appealed Landsréttur case number from the Supreme decision text and resolving it through the Ísland.is verdict API with the unaccented `court: "Landsrettur"` filter.
 
 ## Generated Files
 
@@ -53,7 +55,13 @@ supreme_case_number,supreme_case_link,appeals_case_number,appeals_case_link,sour
 
 Rows without `appeals_case_number` are intentionally not saved because the site is a Landsréttur-to-Hæstiréttur lookup.
 
-Existing historical rows may point to old `www.haestirettur.is` URLs. Do not rewrite them as part of normal refreshes; link migration should be a separate, reviewable data-cleanup task.
+Historical rows from 1 January 2018 onward should point to Ísland.is. If legacy `haestirettur.is` or `landsrettur.is` links appear again, run the explicit migration command:
+
+```bash
+/Users/larust/Documents/hvar-er-haestarettardomurinn/.venv/bin/python get_new_verdicts.py --migrate-island-links
+```
+
+This rewrites Supreme verdict links through the Ísland.is verdict API, decisions through the Ísland.is Hæstiréttur decisions listing, and Landsréttur links through the Ísland.is lower-court verdict API.
 
 ### `mapping.json`
 
@@ -126,5 +134,5 @@ Frontend smoke checks:
 - Ísland.is detail headings may omit whitespace after `Mál nr.`.
 - Landsréttur URLs can contain HTML-escaped `&amp;`; unescape before fetching or storing.
 - Decision pages can contain old-looking labels in late pagination pages; rely on parsed detail pages for canonical Supreme case number.
-- If GraphQL changes, check the current Next.js page chunk for the `GetVerdicts` query and adjust `VERDICTS_QUERY` or the payload shape.
+- If GraphQL changes, check the error response and the current Next.js page chunk for the `GetVerdicts` query and adjust `VERDICTS_QUERY` or the payload shape.
 - Suspicious runs fail before updating `mapping.json` or `last_updated.txt`. Check `scrape_report.json` first when a scheduled scrape fails.
