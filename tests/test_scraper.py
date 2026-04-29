@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 import pytest
 from bs4 import BeautifulSoup
@@ -9,6 +10,7 @@ from get_new_verdicts import (
     Scraper,
     SUPREME_DECISION_RE,
     SUPREME_VERDICT_RE,
+    run_link_migration,
     run_scrape,
 )
 
@@ -104,6 +106,8 @@ def test_extract_listing_links(scraper):
 def test_get_verdict_listing_page_from_graphql(scraper, monkeypatch):
     def fake_fetch_json(url, payload):
         assert payload["variables"]["input"]["page"] == 2
+        assert payload["variables"]["input"]["court"] == "Hæstiréttur"
+        assert "courtLevel" not in payload["variables"]["input"]
         return {
             "data": {
                 "webVerdicts": {
@@ -170,6 +174,72 @@ def test_parse_supreme_page_new_decision_shape(scraper, monkeypatch):
     assert data["decision_status"] == "Hafnað"
     assert data["appeals_case_number"] == "102/2025"
     assert data["appeals_case_link"] == appeals_url
+
+def test_parse_supreme_page_follows_island_lower_court_link(scraper, monkeypatch):
+    supreme_url = "https://island.is/domar/s-B31031B4-3EEB-44FD-89E6-28D1C415BE50"
+    lower_court_url = "https://island.is/domar/g-323affbf-bb40-4730-b1d9-71c32293ea0d"
+    pages = {
+        supreme_url: """
+        <main>
+          <h2>Mál nr.18/2026</h2>
+          <p>Mánudagurinn 27. apríl 2026</p>
+          <a href="/domar/g-323affbf-bb40-4730-b1d9-71c32293ea0d">Úrlausn landsréttar / héraðsdóms</a>
+        </main>
+        """,
+        lower_court_url: "LANDSRÉTTUR Mál nr. 155/2025",
+    }
+
+    monkeypatch.setattr(scraper, "fetch_page", lambda url: pages[url])
+
+    data = scraper.parse_supreme_page(supreme_url, "dóm")
+
+    assert data["supreme_case_number"] == "18/2026"
+    assert data["appeals_case_number"] == "155/2025"
+    assert data["appeals_case_link"] == lower_court_url
+
+def test_parse_decision_resolves_island_link_when_landsrettur_link_fails(scraper, monkeypatch):
+    decision_url = "https://island.is/s/haestirettur/akvardanir/EA844C6E-DA91-4701-8EBD-782B500E1C29"
+    old_appeals_url = "https://landsrettur.is/domar-og-urskurdir/domur-urskurdur/?id=abc&verdictid=def"
+    resolved_appeals_url = "https://island.is/domar/g-ccc9aa9e-15cb-47b2-87dd-9116cf17c3e3"
+    pages = {
+        decision_url: f"""
+        <main>
+          <h2>Mál nr.2026-31</h2>
+          <p>Mánudagurinn 20. apríl 2026</p>
+          <h3>Lykilorð</h3>
+          <ul><li>Hafnað</li></ul>
+          <a href="{old_appeals_url}">Úrlausn Landsréttar / Héraðsdóms</a>
+          <p>Með beiðni leitar A leyfis Hæstaréttar til að áfrýja dómi Landsréttar 19. febrúar sama ár í máli nr. 22/2025.</p>
+        </main>
+        """,
+        old_appeals_url: None,
+    }
+
+    def fake_fetch_json(url, payload):
+        assert payload["variables"]["input"]["court"] == "Landsrettur"
+        assert payload["variables"]["input"]["caseNumber"] == "22/2025"
+        return {
+            "data": {
+                "webVerdicts": {
+                    "items": [
+                        {
+                            "id": "g-ccc9aa9e-15cb-47b2-87dd-9116cf17c3e3",
+                            "caseNumber": "22/2025",
+                            "court": "Landsréttur",
+                        }
+                    ]
+                }
+            }
+        }
+
+    monkeypatch.setattr(scraper, "fetch_page", lambda url: pages[url])
+    monkeypatch.setattr(scraper, "fetch_json", fake_fetch_json)
+
+    data = scraper.parse_supreme_page(decision_url, "ákvörðun")
+
+    assert data["supreme_case_number"] == "2026-31"
+    assert data["appeals_case_number"] == "22/2025"
+    assert data["appeals_case_link"] == resolved_appeals_url
 
 def test_scrape_decisions_stops_after_known_cases(scraper, monkeypatch):
     new_url = "https://island.is/s/haestirettur/akvardanir/11111111-1111-4111-8111-111111111111"
@@ -275,3 +345,51 @@ def test_run_scrape_allows_incremental_no_change_run(tmp_path, monkeypatch):
 
     mapping = json.loads((tmp_path / "mapping.json").read_text(encoding="utf-8"))
     assert mapping["2/2025"]["supreme_case_number"] == "1/2026"
+
+def test_run_link_migration_rewrites_2018_and_newer_links(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    manager = DataManager(csv_path="allir_domar_og_akvardanir.csv", json_path="mapping.json")
+    csv_text = "\n".join([
+        ",".join(manager.columns),
+        "18/2026,https://www.haestirettur.is/domar/_domur/?id=B31031B4-3EEB-44FD-89E6-28D1C415BE50,155/2025,https://landsrettur.is/old,dóm,27. apríl 2026,",
+        "2026-31,https://www.haestirettur.is/akvardanir/_malskotsbeidni/?id=EA844C6E-DA91-4701-8EBD-782B500E1C29,22/2025,https://landsrettur.is/old,ákvörðun,20. apríl 2026,Hafnað",
+        "1/2017,https://www.haestirettur.is/domar/_domur/?id=old,2/2017,https://landsrettur.is/old,dóm,31. desember 2017,",
+        "",
+    ])
+    (tmp_path / "allir_domar_og_akvardanir.csv").write_text(csv_text, encoding="utf-8")
+
+    class FakeScraper:
+        def resolve_lower_court_links(self, case_numbers):
+            assert case_numbers == {"155/2025", "22/2025"}
+            return {
+                "155/2025": "https://island.is/domar/g-323affbf-bb40-4730-b1d9-71c32293ea0d",
+                "22/2025": "https://island.is/domar/g-ccc9aa9e-15cb-47b2-87dd-9116cf17c3e3",
+            }
+
+        def build_decision_link_index(self, since_year=2018, page_limit=200):
+            raise AssertionError("Decision index should not be needed when legacy UUID is present")
+
+        def find_island_supreme_verdict_link(self, case_number):
+            return {
+                "18/2026": "https://island.is/domar/s-B31031B4-3EEB-44FD-89E6-28D1C415BE50",
+            }.get(case_number, "")
+
+        def find_island_lower_court_link(self, case_number):
+            return {
+                "155/2025": "https://island.is/domar/g-323affbf-bb40-4730-b1d9-71c32293ea0d",
+                "22/2025": "https://island.is/domar/g-ccc9aa9e-15cb-47b2-87dd-9116cf17c3e3",
+            }.get(case_number, "")
+
+    exit_code = run_link_migration(FakeScraper(), manager, since_date=date(2018, 1, 1))
+
+    assert exit_code == 0
+    rows = manager.load_existing_data().to_dict(orient="records")
+    assert rows[0]["supreme_case_link"] == "https://island.is/domar/s-B31031B4-3EEB-44FD-89E6-28D1C415BE50"
+    assert rows[0]["appeals_case_link"] == "https://island.is/domar/g-323affbf-bb40-4730-b1d9-71c32293ea0d"
+    assert rows[1]["supreme_case_link"] == "https://island.is/s/haestirettur/akvardanir/EA844C6E-DA91-4701-8EBD-782B500E1C29"
+    assert rows[1]["appeals_case_link"] == "https://island.is/domar/g-ccc9aa9e-15cb-47b2-87dd-9116cf17c3e3"
+    assert rows[2]["supreme_case_link"] == "https://www.haestirettur.is/domar/_domur/?id=old"
+    assert rows[2]["appeals_case_link"] == "https://landsrettur.is/old"
+
+    mapping = json.loads((tmp_path / "mapping.json").read_text(encoding="utf-8"))
+    assert mapping["155/2025"]["supreme_case_link"].startswith("https://island.is/domar/s-")
