@@ -1,15 +1,17 @@
 import argparse
+import concurrent.futures
 import re
 import json
 import logging
 import math
+import threading
 from dataclasses import asdict, dataclass, field
+from datetime import date, datetime
 from html import unescape
 from typing import Optional, List, Set, Tuple, Dict, Any
 from pathlib import Path
-from datetime import datetime
 from zoneinfo import ZoneInfo
-from urllib.parse import urlparse, urljoin
+from urllib.parse import parse_qs, urlparse, urljoin
 
 import requests
 import pandas as pd
@@ -27,9 +29,25 @@ VERDICT_LISTING_URL = f"{ISLAND_BASE_URL}/domar?court=H%C3%A6stir%C3%A9ttur"
 DECISION_LISTING_URL = f"{ISLAND_BASE_URL}/s/haestirettur/akvardanir"
 GRAPHQL_URL = f"{ISLAND_BASE_URL}/api/graphql"
 SUPREME_COURT_LEVEL = "Hæstiréttur"
+LANDSRETTUR_COURT_FILTER = "Landsrettur"
+LANDSRETTUR_COURT_LEVEL = "Landsréttur"
 DEFAULT_DECISION_PAGE_LIMIT = 200
 SCRAPE_REPORT_PATH = Path("scrape_report.json")
 HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"}
+ICELANDIC_MONTHS = {
+    "janúar": 1,
+    "febrúar": 2,
+    "mars": 3,
+    "apríl": 4,
+    "maí": 5,
+    "júní": 6,
+    "júlí": 7,
+    "ágúst": 8,
+    "september": 9,
+    "október": 10,
+    "nóvember": 11,
+    "desember": 12,
+}
 
 VERDICTS_QUERY = """
 query GetVerdicts($input: WebVerdictsInput!) {
@@ -51,14 +69,50 @@ SUPREME_VERDICT_RE  = re.compile(r"Mál\s+nr\.?\s*(\d+)/(20\d{2})", re.I)
 APPEALS_URL_RE = re.compile(r"https?://(?:www\.)?landsrettur\.is/[^\s\"'<>]+", re.I)
 APPEALS_NO_RE  = re.compile(r"\b(\d+)/(20\d{2})\b")
 VERDICT_ID_RE = re.compile(r"^s-[A-Za-z0-9-]+$")
+LOWER_COURT_ID_RE = re.compile(r"^g-[A-Za-z0-9-]+$")
 VERDICT_PATH_RE = re.compile(r"^/domar/(s-[A-Za-z0-9-]+)/?$")
+LOWER_COURT_PATH_RE = re.compile(r"^/domar/g-[A-Za-z0-9-]+/?$")
 DECISION_PATH_RE = re.compile(r"^/s/haestirettur/akvardanir/[A-Fa-f0-9-]{36}/?$")
 CASE_LABEL_RE = re.compile(r"\b(?:\d{4}-\d+|\d+/(?:19|20)\d{2})\b")
+APPEALED_LANDSRETTUR_CASE_RE = re.compile(
+    r"\bdómi\s+Landsréttar\b.{0,200}?\bí\s+máli\s+nr\.?\s*(\d+)/(20\d{2})",
+    re.I,
+)
 MONTHS_PATTERN = "janúar|febrúar|mars|apríl|maí|júní|júlí|ágúst|september|október|nóvember|desember"
 DATE_RE = re.compile(rf"\b(\d{{1,2}}\.\s+(?:{MONTHS_PATTERN})\s+20\d{{2}})\b", re.I)
 
 def now_reykjavik_iso() -> str:
     return datetime.now(ZoneInfo("Atlantic/Reykjavik")).isoformat(timespec="seconds")
+
+def parse_icelandic_date(value: str) -> Optional[date]:
+    match = DATE_RE.search(value or "")
+    if not match:
+        return None
+
+    day_text, month_text, year_text = match.group(1).replace(".", "").split()
+    month = ICELANDIC_MONTHS.get(month_text.casefold())
+    if not month:
+        return None
+    return date(int(year_text), month, int(day_text))
+
+def is_island_url(value: str) -> bool:
+    return urlparse(value or "").netloc.lower() == "island.is"
+
+def has_domain(value: str, domain: str) -> bool:
+    netloc = urlparse(value or "").netloc.lower()
+    return netloc == domain or netloc.endswith(f".{domain}")
+
+def query_id(value: str) -> str:
+    parsed = urlparse(unescape(value or ""))
+    return (parse_qs(parsed.query).get("id") or [""])[0].strip()
+
+def legacy_supreme_link_to_island(value: str, source_type: str) -> str:
+    item_id = query_id(value)
+    if not item_id:
+        return ""
+    if "ákvörðun" in source_type.casefold():
+        return urljoin(ISLAND_BASE_URL, f"/s/haestirettur/akvardanir/{item_id}")
+    return urljoin(ISLAND_BASE_URL, f"/domar/s-{item_id}")
 
 @dataclass
 class SourceStats:
@@ -283,11 +337,24 @@ class Scraper:
     def is_trusted_appeals_url(self, url: str) -> bool:
         parsed = urlparse(url)
         domain = parsed.netloc.lower()
-        return domain == "landsrettur.is" or domain.endswith(".landsrettur.is")
+        if domain == "landsrettur.is" or domain.endswith(".landsrettur.is"):
+            return True
+        return domain == "island.is" and bool(LOWER_COURT_PATH_RE.match(parsed.path))
 
     def extract_appeals_link(self, html: str) -> str:
         for match in APPEALS_URL_RE.finditer(html):
             candidate = unescape(match.group(0)).rstrip(".,)")
+            if self.is_trusted_appeals_url(candidate):
+                return candidate
+
+        soup = BeautifulSoup(html, "html.parser")
+        for anchor in soup.find_all("a", href=True):
+            if not isinstance(anchor, Tag):
+                continue
+            href = anchor.get("href")
+            if not isinstance(href, str):
+                continue
+            candidate = urljoin(ISLAND_BASE_URL, unescape(href))
             if self.is_trusted_appeals_url(candidate):
                 return candidate
         return ""
@@ -307,6 +374,125 @@ class Scraper:
             if int(year) >= 2018:
                 return f"{num}/{year}"
         return ""
+
+
+    def extract_appeals_case_number_from_supreme_text(self, page_text: str, source_type: str) -> str:
+        if "ákvörðun" not in source_type.casefold():
+            return ""
+
+        match = APPEALED_LANDSRETTUR_CASE_RE.search(page_text)
+        return f"{match.group(1)}/{match.group(2)}" if match else ""
+
+    def find_island_lower_court_link(self, case_number: str) -> str:
+        return self.find_island_verdict_link(
+            case_number=case_number,
+            court_filter=LANDSRETTUR_COURT_FILTER,
+            expected_court=LANDSRETTUR_COURT_LEVEL,
+            id_pattern=LOWER_COURT_ID_RE,
+        )
+
+    def find_island_supreme_verdict_link(self, case_number: str) -> str:
+        return self.find_island_verdict_link(
+            case_number=case_number,
+            court_filter=SUPREME_COURT_LEVEL,
+            expected_court=SUPREME_COURT_LEVEL,
+            id_pattern=VERDICT_ID_RE,
+        )
+
+    def find_island_verdict_link(
+        self,
+        case_number: str,
+        court_filter: str,
+        expected_court: str,
+        id_pattern: re.Pattern,
+    ) -> str:
+        if not case_number:
+            return ""
+
+        payload = {
+            "query": VERDICTS_QUERY,
+            "variables": {
+                "input": {
+                    "searchTerm": None,
+                    "caseCategories": None,
+                    "caseTypes": None,
+                    "keywords": None,
+                    "page": 1,
+                    "court": court_filter,
+                    "laws": None,
+                    "caseNumber": case_number,
+                    "dateFrom": None,
+                    "dateTo": None,
+                    "caseContact": None,
+                }
+            },
+        }
+        data = self.fetch_json(GRAPHQL_URL, payload)
+        web_verdicts = (data or {}).get("data", {}).get("webVerdicts") or {}
+        for item in web_verdicts.get("items") or []:
+            item_id = item.get("id") or ""
+            if (
+                item.get("court") == expected_court
+                and (item.get("caseNumber") or "").strip() == case_number
+                and id_pattern.match(item_id)
+            ):
+                return urljoin(ISLAND_BASE_URL, f"/domar/{item_id}")
+        return ""
+
+    def resolve_lower_court_links(self, case_numbers: Set[str], max_workers: int = 8) -> Dict[str, str]:
+        links: Dict[str, str] = {}
+        ordered_case_numbers = sorted(case_numbers)
+        if not ordered_case_numbers:
+            return links
+
+        thread_local = threading.local()
+
+        def worker(case_number: str) -> Tuple[str, str]:
+            if not hasattr(thread_local, "scraper"):
+                thread_local.scraper = Scraper(retries=1, backoff_factor=0.1)
+            return case_number, thread_local.scraper.find_island_lower_court_link(case_number)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = [executor.submit(worker, case_number) for case_number in ordered_case_numbers]
+            for index, future in enumerate(concurrent.futures.as_completed(futures), start=1):
+                case_number, link = future.result()
+                if link:
+                    links[case_number] = link
+                if index % 100 == 0:
+                    logger.info("Resolved %s/%s Landsréttur links.", index, len(ordered_case_numbers))
+
+        logger.info("Resolved %s/%s Landsréttur case numbers to Ísland.is links.", len(links), len(ordered_case_numbers))
+        return links
+
+    def build_decision_link_index(
+        self,
+        since_year: int = 2018,
+        page_limit: int = DEFAULT_DECISION_PAGE_LIMIT,
+    ) -> Dict[str, str]:
+        decision_links: Dict[str, str] = {}
+        for page in range(1, page_limit + 1):
+            items, ok = self.get_decision_listing_page(page)
+            if not ok:
+                logger.warning(f"Could not fetch decision listing page {page} during link migration.")
+                break
+            if not items:
+                break
+
+            page_years: List[int] = []
+            for url, case_number in items:
+                match = re.match(r"^(20\d{2})-\d+$", case_number or "")
+                if not match:
+                    continue
+                case_year = int(match.group(1))
+                page_years.append(case_year)
+                if case_year >= since_year:
+                    decision_links.setdefault(case_number, url)
+
+            if page_years and max(page_years) < since_year:
+                break
+
+        logger.info(f"Indexed {len(decision_links)} Ísland.is decision links from {since_year} onward.")
+        return decision_links
 
     def extract_supreme_case_number(self, html: str, page_text: str, source_type: str) -> str:
         search_text = f"{page_text} {html}"
@@ -342,6 +528,13 @@ class Scraper:
         
         if app_link:
             app_no = self.get_appeals_case_number(app_link)
+
+        if not app_no:
+            fallback_no = self.extract_appeals_case_number_from_supreme_text(page_text, source_type)
+            fallback_link = self.find_island_lower_court_link(fallback_no) if fallback_no else ""
+            if fallback_no and fallback_link:
+                app_no = fallback_no
+                app_link = fallback_link
 
         return {
             "supreme_case_number": sup_no,
@@ -412,7 +605,7 @@ class Scraper:
                     "caseTypes": None,
                     "keywords": None,
                     "page": page,
-                    "courtLevel": SUPREME_COURT_LEVEL,
+                    "court": SUPREME_COURT_LEVEL,
                     "laws": None,
                     "caseNumber": None,
                     "dateFrom": None,
@@ -664,6 +857,10 @@ class DataManager:
         logger.info(f"Updated CSV. Total rows: {len(df_combined)}. New rows: {added_count}")
         return added_count
 
+    def write_data(self, df: pd.DataFrame) -> None:
+        df[self.columns].to_csv(self.csv_path, index=False, encoding="utf-8")
+        logger.info(f"Wrote CSV with {len(df)} rows.")
+
     def generate_json_mapping(self) -> int:
         if not self.csv_path.exists():
             logger.warning("No CSV file found to generate JSON mapping.")
@@ -710,7 +907,115 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Update Landsréttur to Hæstiréttur lookup data.")
     parser.add_argument("--full", action="store_true", help="Crawl available listing pages instead of stopping at known cases.")
     parser.add_argument("--max-pages", type=int, default=None, help="Optional page limit for each source, useful for diagnostics.")
+    parser.add_argument("--migrate-island-links", action="store_true", help="Rewrite stored links from 2018 onward to their Ísland.is equivalents.")
+    parser.add_argument("--since-date", default="2018-01-01", help="Start date for --migrate-island-links, ISO format YYYY-MM-DD.")
+    parser.add_argument("--decision-page-limit", type=int, default=DEFAULT_DECISION_PAGE_LIMIT, help="Decision listing page cap for --migrate-island-links.")
+    parser.add_argument("--dry-run", action="store_true", help="Report migration changes without writing CSV, mapping, or timestamp files.")
     return parser.parse_args()
+
+def run_link_migration(
+    scraper: Scraper,
+    manager: DataManager,
+    since_date: date,
+    decision_page_limit: int = DEFAULT_DECISION_PAGE_LIMIT,
+    dry_run: bool = False,
+) -> int:
+    df = manager.load_existing_data().copy()
+    if df.empty:
+        logger.info("No CSV rows found to migrate.")
+        return 0
+
+    rows_since_date: Set[int] = set()
+    needed_appeals_case_numbers: Set[str] = set()
+    for idx, row in df.iterrows():
+        parsed_date = parse_icelandic_date(str(row.get("verdict_date", "")))
+        if not parsed_date or parsed_date < since_date:
+            continue
+        rows_since_date.add(idx)
+        appeals_case_number = str(row.get("appeals_case_number", "")).strip()
+        current_appeals_link = str(row.get("appeals_case_link", "")).strip()
+        if appeals_case_number and (not current_appeals_link or not is_island_url(current_appeals_link)):
+            needed_appeals_case_numbers.add(appeals_case_number)
+
+    appeals_links = scraper.resolve_lower_court_links(needed_appeals_case_numbers)
+    decision_links: Optional[Dict[str, str]] = None
+    supreme_cache: Dict[str, str] = {}
+    appeals_cache: Dict[str, str] = {}
+    unresolved_supreme: List[str] = []
+    unresolved_appeals: List[str] = []
+    rows_considered = 0
+    supreme_updates = 0
+    appeals_updates = 0
+
+    for idx, row in df.iterrows():
+        if idx not in rows_since_date:
+            continue
+
+        rows_considered += 1
+        supreme_case_number = str(row.get("supreme_case_number", "")).strip()
+        appeals_case_number = str(row.get("appeals_case_number", "")).strip()
+        source_type = str(row.get("source_type", ""))
+        current_supreme_link = str(row.get("supreme_case_link", "")).strip()
+        current_appeals_link = str(row.get("appeals_case_link", "")).strip()
+
+        if current_supreme_link and not is_island_url(current_supreme_link):
+            new_supreme_link = legacy_supreme_link_to_island(current_supreme_link, source_type)
+            if not new_supreme_link and "ákvörðun" in source_type.casefold():
+                if decision_links is None:
+                    decision_links = scraper.build_decision_link_index(
+                        since_year=since_date.year,
+                        page_limit=decision_page_limit,
+                    )
+                new_supreme_link = decision_links.get(supreme_case_number, "")
+            elif not new_supreme_link:
+                if supreme_case_number not in supreme_cache:
+                    supreme_cache[supreme_case_number] = scraper.find_island_supreme_verdict_link(supreme_case_number)
+                new_supreme_link = supreme_cache[supreme_case_number]
+
+            if new_supreme_link:
+                if current_supreme_link != new_supreme_link:
+                    df.loc[idx, "supreme_case_link"] = new_supreme_link
+                    supreme_updates += 1
+            elif has_domain(current_supreme_link, "haestirettur.is"):
+                unresolved_supreme.append(supreme_case_number)
+
+        should_resolve_appeals = bool(appeals_case_number) and (
+            not current_appeals_link or not is_island_url(current_appeals_link)
+        )
+        if should_resolve_appeals:
+            if appeals_case_number not in appeals_cache:
+                appeals_cache[appeals_case_number] = appeals_links.get(appeals_case_number, "") or scraper.find_island_lower_court_link(appeals_case_number)
+            new_appeals_link = appeals_cache[appeals_case_number]
+            if new_appeals_link:
+                if current_appeals_link != new_appeals_link:
+                    df.loc[idx, "appeals_case_link"] = new_appeals_link
+                    appeals_updates += 1
+            elif current_appeals_link and has_domain(current_appeals_link, "landsrettur.is"):
+                unresolved_appeals.append(appeals_case_number)
+
+    unresolved_supreme = sorted(set(unresolved_supreme))
+    unresolved_appeals = sorted(set(unresolved_appeals))
+    logger.info(
+        "Link migration checked %s rows from %s onward; updated %s Supreme links and %s Landsréttur links.",
+        rows_considered,
+        since_date.isoformat(),
+        supreme_updates,
+        appeals_updates,
+    )
+
+    if unresolved_supreme:
+        logger.warning("Unresolved Supreme links: %s", ", ".join(unresolved_supreme[:20]))
+    if unresolved_appeals:
+        logger.warning("Unresolved Landsréttur links: %s", ", ".join(unresolved_appeals[:20]))
+
+    if dry_run:
+        logger.info("Dry run requested; leaving files unchanged.")
+        return 1 if unresolved_supreme or unresolved_appeals else 0
+
+    manager.write_data(df)
+    manager.generate_json_mapping()
+    manager.update_timestamp()
+    return 1 if unresolved_supreme or unresolved_appeals else 0
 
 def run_scrape(
     scraper: Scraper,
@@ -778,6 +1083,14 @@ def main() -> int:
     args = parse_args()
     scraper = Scraper()
     manager = DataManager()
+    if args.migrate_island_links:
+        return run_link_migration(
+            scraper,
+            manager,
+            since_date=date.fromisoformat(args.since_date),
+            decision_page_limit=args.decision_page_limit,
+            dry_run=args.dry_run,
+        )
     return run_scrape(scraper, manager, full=args.full, max_pages=args.max_pages)
 
 if __name__ == "__main__":

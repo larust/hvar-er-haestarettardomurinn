@@ -1,6 +1,6 @@
 {
-  "started_at": "2026-04-24T21:43:09+00:00",
-  "completed_at": "2026-04-24T21:43:11+00:00",
+  "started_at": "2026-04-30T20:56:58+00:00",
+  "completed_at": "2026-04-30T20:57:14+00:00",
   "mode": "incremental",
   "max_pages": 1,
   "source_urls": {
@@ -13,11 +13,11 @@
       "listing_pages_failed": 0,
       "listing_pages_empty": 0,
       "listing_items_discovered": 10,
-      "known_items_skipped": 10,
-      "detail_pages_attempted": 0,
-      "detail_pages_with_case_number": 0,
+      "known_items_skipped": 7,
+      "detail_pages_attempted": 3,
+      "detail_pages_with_case_number": 3,
       "detail_pages_without_case_number": 0,
-      "linked_rows": 0,
+      "linked_rows": 3,
       "unlinked_rows": 0
     },
     "decisions": {
@@ -25,26 +25,26 @@
       "listing_pages_failed": 0,
       "listing_pages_empty": 0,
       "listing_items_discovered": 10,
-      "known_items_skipped": 10,
-      "detail_pages_attempted": 0,
-      "detail_pages_with_case_number": 0,
+      "known_items_skipped": 6,
+      "detail_pages_attempted": 4,
+      "detail_pages_with_case_number": 4,
       "detail_pages_without_case_number": 0,
-      "linked_rows": 0,
+      "linked_rows": 4,
       "unlinked_rows": 0
     }
   },
   "skipped_cases": [],
   "source_failures": [],
-  "csv_rows_added": 0,
-  "mapping_links_generated": 1521,
+  "csv_rows_added": 7,
+  "mapping_links_generated": 1529,
   "artifacts_refreshed": true,
   "failed": false,
   "failure_reason": "",
   "totals": {
     "listing_pages_fetched": 2,
     "listing_items_discovered": 20,
-    "detail_pages_attempted": 0,
-    "valid_supreme_cases": 0,
-    "linked_rows": 0
+    "detail_pages_attempted": 7,
+    "valid_supreme_cases": 7,
+    "linked_rows": 7
   }
 }
