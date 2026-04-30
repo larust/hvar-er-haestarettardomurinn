@@ -366,43 +366,77 @@ function levenshtein(a, b) {
   return prev[lenB];
 }
 
-function weightedDistance(inputCase, inputYear, candidate) {
-  const [candCase = '', candYear = ''] = candidate.split('/');
-  const caseDistance = levenshtein(inputCase, candCase);
-  const yearDistance = levenshtein(inputYear, candYear);
-  return caseDistance + yearDistance * 1.5;
+function parseCaseNumberParts(value) {
+  const [sequenceText = '', yearText = ''] = toText(value).split('/');
+  const sequence = Number(sequenceText);
+  const year = Number(yearText);
+
+  return {
+    sequenceText,
+    yearText,
+    sequence: Number.isInteger(sequence) ? sequence : null,
+    year: Number.isInteger(year) ? year : null,
+  };
+}
+
+function getNumericGap(first, second) {
+  if (first == null || second == null) return Number.POSITIVE_INFINITY;
+  return Math.abs(first - second);
+}
+
+function getSequencePenalty(inputParts, candidateParts, sequenceDistance) {
+  const gap = getNumericGap(inputParts.sequence, candidateParts.sequence);
+  if (!Number.isFinite(gap) || gap === 0) return 0;
+  if (gap <= 100) return gap / 100;
+  if (sequenceDistance <= 1 && inputParts.sequenceText.length !== candidateParts.sequenceText.length) return 1;
+  return 2.5;
+}
+
+function getYearPenalty(inputParts, candidateParts, sequenceDistance) {
+  const gap = getNumericGap(inputParts.year, candidateParts.year);
+  if (!Number.isFinite(gap) || gap <= 1) return 0;
+  if (sequenceDistance === 0) return Math.min(gap / 10, 1);
+  return Math.min((gap - 1) * 0.5, 2);
+}
+
+function rankSuggestion(inputParts, key) {
+  const candidateParts = parseCaseNumberParts(key);
+  const sequenceDistance = levenshtein(inputParts.sequenceText, candidateParts.sequenceText);
+  const yearDistance = levenshtein(inputParts.yearText, candidateParts.yearText);
+  const sequenceGap = getNumericGap(inputParts.sequence, candidateParts.sequence);
+  const yearGap = getNumericGap(inputParts.year, candidateParts.year);
+  const score = sequenceDistance
+    + yearDistance * 1.5
+    + getSequencePenalty(inputParts, candidateParts, sequenceDistance)
+    + getYearPenalty(inputParts, candidateParts, sequenceDistance);
+
+  return {
+    key,
+    score,
+    sequenceDistance,
+    yearDistance,
+    sequenceGap,
+    yearGap,
+  };
+}
+
+function compareSuggestionRanks(a, b) {
+  if (a.score !== b.score) return a.score - b.score;
+  if (a.yearGap !== b.yearGap) return a.yearGap - b.yearGap;
+  if (a.sequenceGap !== b.sequenceGap) return a.sequenceGap - b.sequenceGap;
+  if (a.sequenceDistance !== b.sequenceDistance) return a.sequenceDistance - b.sequenceDistance;
+  if (a.yearDistance !== b.yearDistance) return a.yearDistance - b.yearDistance;
+  return a.key.localeCompare(b.key, 'is', { numeric: true });
 }
 
 function getSuggestions(term) {
   if (!term || !mappingKeys.length) return [];
-  const [inputCase = '', inputYear = ''] = term.split('/');
-  const sameCase = inputCase
-    ? mappingKeys.filter(key => key.split('/')[0] === inputCase)
-    : [];
-  const sameYear = inputYear
-    ? mappingKeys.filter(key => key.endsWith(`/${inputYear}`))
-    : [];
 
-  const candidateSet = new Set();
-  sameCase.forEach(key => candidateSet.add(key));
-  sameYear.forEach(key => candidateSet.add(key));
-
-  if (!candidateSet.size) {
-    mappingKeys.forEach(key => candidateSet.add(key));
-  } else if (candidateSet.size < MAX_SUGGESTIONS) {
-    mappingKeys.forEach(key => candidateSet.add(key));
-  }
-
-  const ranked = Array.from(candidateSet)
-    .map(key => ({
-      key,
-      score: weightedDistance(inputCase, inputYear, key),
-    }))
-    .sort((a, b) => a.score - b.score);
-
-  if (!ranked.length || ranked[0].score > MAX_SUGGESTION_DISTANCE) return [];
-
-  return ranked
+  const inputParts = parseCaseNumberParts(term);
+  return mappingKeys
+    .map(key => rankSuggestion(inputParts, key))
+    .filter(item => item.score <= MAX_SUGGESTION_DISTANCE)
+    .sort(compareSuggestionRanks)
     .slice(0, MAX_SUGGESTIONS)
     .map(item => item.key);
 }
