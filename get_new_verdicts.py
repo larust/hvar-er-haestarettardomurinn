@@ -428,7 +428,7 @@ class Scraper:
             },
         }
         data = self.fetch_json(GRAPHQL_URL, payload)
-        web_verdicts = (data or {}).get("data", {}).get("webVerdicts") or {}
+        web_verdicts = ((data or {}).get("data") or {}).get("webVerdicts") or {}
         for item in web_verdicts.get("items") or []:
             item_id = item.get("id") or ""
             if (
@@ -615,7 +615,7 @@ class Scraper:
             },
         }
         data = self.fetch_json(GRAPHQL_URL, payload)
-        web_verdicts = (data or {}).get("data", {}).get("webVerdicts")
+        web_verdicts = ((data or {}).get("data") or {}).get("webVerdicts")
         if web_verdicts:
             items = []
             for item in web_verdicts.get("items") or []:
