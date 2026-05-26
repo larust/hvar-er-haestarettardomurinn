@@ -106,13 +106,26 @@ def query_id(value: str) -> str:
     parsed = urlparse(unescape(value or ""))
     return (parse_qs(parsed.query).get("id") or [""])[0].strip()
 
+ISLAND_UUID_RE = re.compile(
+    r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+)
+
+def normalize_island_link(value: str) -> str:
+    """island.is now serves judgment UUIDs case-sensitively as uppercase; the
+    lowercase form 404s for /domar/s- (Supreme verdicts) and /s/haestirettur/akvardanir
+    (Supreme decisions). Uppercase the UUID portion so stored links keep resolving.
+    The s-/g- path prefixes are left untouched."""
+    if not is_island_url(value):
+        return value or ""
+    return ISLAND_UUID_RE.sub(lambda m: m.group(0).upper(), value)
+
 def legacy_supreme_link_to_island(value: str, source_type: str) -> str:
     item_id = query_id(value)
     if not item_id:
         return ""
     if "ákvörðun" in source_type.casefold():
-        return urljoin(ISLAND_BASE_URL, f"/s/haestirettur/akvardanir/{item_id}")
-    return urljoin(ISLAND_BASE_URL, f"/domar/s-{item_id}")
+        return normalize_island_link(urljoin(ISLAND_BASE_URL, f"/s/haestirettur/akvardanir/{item_id}"))
+    return normalize_island_link(urljoin(ISLAND_BASE_URL, f"/domar/s-{item_id}"))
 
 @dataclass
 class SourceStats:
@@ -818,6 +831,17 @@ class DataManager:
             "decision_status",
         ]
 
+    # Only Supreme links need recasing: island.is serves /domar/s- and
+    # /s/haestirettur/akvardanir UUIDs case-sensitively (uppercase). Appeals
+    # /domar/g- links resolve in either case, so they are left as scraped.
+    link_columns = ("supreme_case_link",)
+
+    def _normalize_link_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        for col in self.link_columns:
+            if col in df.columns:
+                df.loc[:, col] = df[col].astype(str).map(normalize_island_link)
+        return df
+
     def load_existing_data(self) -> pd.DataFrame:
         if self.csv_path.exists():
             df = pd.read_csv(self.csv_path, dtype=str).fillna("")
@@ -852,12 +876,14 @@ class DataManager:
         if added_count == 0:
             logger.info(f"No new CSV rows after deduplication. Total rows: {len(df_combined)}")
             return 0
-        
+
+        df_combined = self._normalize_link_columns(df_combined)
         df_combined.to_csv(self.csv_path, index=False, encoding="utf-8")
         logger.info(f"Updated CSV. Total rows: {len(df_combined)}. New rows: {added_count}")
         return added_count
 
     def write_data(self, df: pd.DataFrame) -> None:
+        df = self._normalize_link_columns(df.copy())
         df[self.columns].to_csv(self.csv_path, index=False, encoding="utf-8")
         logger.info(f"Wrote CSV with {len(df)} rows.")
 
@@ -876,6 +902,7 @@ class DataManager:
         for col in self.columns:
             df.loc[:, col] = df[col].astype(str).str.strip()
 
+        df = self._normalize_link_columns(df)
         df = df[df["appeals_case_number"].astype(bool)]
 
         # Grouping
