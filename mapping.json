@@ -1143,6 +1143,14 @@
     "verdict_date": "23. maí 2023",
     "decision_status": "Hafnað"
   },
+  "1741/2024": {
+    "supreme_case_number": "41/2025",
+    "supreme_case_link": "https://island.is/domar/s-D9014769-BC02-4217-A343-5E715D0366CD",
+    "appeals_case_link": "https://island.is/domar/g-8c6b6d2f-f4f6-4d02-873a-984aac02a94b",
+    "source_type": "dóm",
+    "verdict_date": "27. maí 2026",
+    "decision_status": ""
+  },
   "176/2023": {
     "supreme_case_number": "17/2024",
     "supreme_case_link": "https://island.is/domar/s-4E0CE4DE-B9EB-4A0C-9397-0F92B5DB9514",
@@ -2301,6 +2309,14 @@
       "source_type": "ákvörðun",
       "verdict_date": "22. desember 2025",
       "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "66/2025",
+      "supreme_case_link": "https://island.is/domar/s-31146C15-5754-40DB-AC41-77BBAEAEEA32",
+      "appeals_case_link": "https://island.is/domar/g-b40906e1-58be-4f45-a16a-5c17b08108bf",
+      "source_type": "dóm",
+      "verdict_date": "27. maí 2026",
+      "decision_status": ""
     }
   ],
   "238/2023": {
@@ -2335,6 +2351,14 @@
       "source_type": "ákvörðun",
       "verdict_date": "22. desember 2025",
       "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "67/2025",
+      "supreme_case_link": "https://island.is/domar/s-27921ED9-7CF9-4805-86F3-7B044C2D16F8",
+      "appeals_case_link": "https://island.is/domar/g-d5f6af49-9fa6-493c-af36-4d5b6957fd6d",
+      "source_type": "dóm",
+      "verdict_date": "27. maí 2026",
+      "decision_status": ""
     }
   ],
   "239/2019": {
@@ -2385,6 +2409,14 @@
       "source_type": "ákvörðun",
       "verdict_date": "22. desember 2025",
       "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "68/2025",
+      "supreme_case_link": "https://island.is/domar/s-400129ED-34EB-4272-AB47-AA96D1CA00D7",
+      "appeals_case_link": "https://island.is/domar/g-4366d948-930e-4e54-be2e-2142439ab4bc",
+      "source_type": "dóm",
+      "verdict_date": "27. maí 2026",
+      "decision_status": ""
     }
   ],
   "24/2019": {
