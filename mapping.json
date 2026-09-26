@@ -4285,6 +4285,14 @@
       "decision_status": ""
     }
   ],
+  "330/2025": {
+    "supreme_case_number": "2026-95",
+    "supreme_case_link": "https://island.is/s/haestirettur/akvardanir/7F4E8026-DA78-47A9-93FF-963CF3807978",
+    "appeals_case_link": "https://island.is/domar/g-b4d115c1-571f-4ee6-9286-69295184d397",
+    "source_type": "ákvörðun",
+    "verdict_date": "22. september 2026",
+    "decision_status": "Hafnað"
+  },
   "331/2020": [
     {
       "supreme_case_number": "2021-164",
