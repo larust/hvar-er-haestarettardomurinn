@@ -8969,14 +8969,24 @@
     "verdict_date": "20. mars 2025",
     "decision_status": "Hafnað"
   },
-  "566/2025": {
-    "supreme_case_number": "2026-110",
-    "supreme_case_link": "https://island.is/s/haestirettur/akvardanir/A0041992-D1C1-4102-AD6E-12FF3E79AC2F",
-    "appeals_case_link": "https://island.is/domar/g-20ce6f04-7a09-4928-af08-5a0a5c401e46",
-    "source_type": "ákvörðun",
-    "verdict_date": "21. september 2026",
-    "decision_status": "Samþykkt"
-  },
+  "566/2025": [
+    {
+      "supreme_case_number": "2026-110",
+      "supreme_case_link": "https://island.is/s/haestirettur/akvardanir/A0041992-D1C1-4102-AD6E-12FF3E79AC2F",
+      "appeals_case_link": "https://island.is/domar/g-20ce6f04-7a09-4928-af08-5a0a5c401e46",
+      "source_type": "ákvörðun",
+      "verdict_date": "21. september 2026",
+      "decision_status": "Samþykkt"
+    },
+    {
+      "supreme_case_number": "44/2026",
+      "supreme_case_link": "https://island.is/domar/s-9180F5AE-E7BE-4B92-8E14-A3A1ED3692B1",
+      "appeals_case_link": "https://island.is/domar/g-20ce6f04-7a09-4928-af08-5a0a5c401e46",
+      "source_type": "dóm",
+      "verdict_date": "30. október 2026",
+      "decision_status": ""
+    }
+  ],
   "568/2018": {
     "supreme_case_number": "2019-134",
     "supreme_case_link": "https://island.is/s/haestirettur/akvardanir/79358D12-FEA7-4129-A1A9-C950A94D9DD7",
@@ -9648,6 +9658,14 @@
     "source_type": "ákvörðun",
     "verdict_date": "20. ágúst 2021",
     "decision_status": "Hafnað"
+  },
+  "603/2026": {
+    "supreme_case_number": "2026-134",
+    "supreme_case_link": "https://island.is/s/haestirettur/akvardanir/4D60EA35-82C1-4684-867F-4E704708634B",
+    "appeals_case_link": "https://island.is/domar/g-0d599134-ff35-4cf5-9ef3-b3c32ec6e4f8",
+    "source_type": "ákvörðun",
+    "verdict_date": "27. október 2026",
+    "decision_status": "Samþykkt"
   },
   "604/2018": {
     "supreme_case_number": "2018-208",
